@@ -1,0 +1,6 @@
+@NaReta.Api_HostAddress = http://localhost:5182
+
+GET {{NaReta.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
