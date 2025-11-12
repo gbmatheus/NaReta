@@ -10,7 +10,7 @@ namespace NaReta.Domain.Test.Entities
         public void Constructor_ValidParameters_CreateTransaction()
         {
             // Arrange
-            TransactionTypeEnum TYPE = TransactionTypeEnum.Expense;
+            TransactionType TYPE = TransactionType.Expense;
             const decimal AMOUNT = 100.02m;
             DateTime DATE = new DateTime(2025, 1, 1);
             const string DESCRIPTION = "despesa 1";
@@ -37,7 +37,7 @@ namespace NaReta.Domain.Test.Entities
             var category = new Category("Alimentação");
 
             // Act
-            var act = () => new Transaction((TransactionTypeEnum) 3, AMOUNT, DATE, category, DESCRIPTION);
+            var act = () => new Transaction((TransactionType) 3, AMOUNT, DATE, category, DESCRIPTION);
 
             // Assert
             act.ShouldThrow<ArgumentException>(ResourceErrorMessages.TYPE_INVALID);
@@ -50,7 +50,7 @@ namespace NaReta.Domain.Test.Entities
         public void Constructor_AmountEqualOrLessThanZero_ThrowArgumentException(Decimal amount)
         {
             // Arrange
-            TransactionTypeEnum TYPE = TransactionTypeEnum.Expense;
+            TransactionType TYPE = TransactionType.Expense;
             DateTime DATE = new DateTime(2025, 1, 1);
             const string DESCRIPTION = "despesa 1";
             var category = new Category("Alimentação");

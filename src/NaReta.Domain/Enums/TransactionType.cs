@@ -1,6 +1,6 @@
 ﻿namespace NaReta.Domain.Enums
 {
-    public enum TransactionTypeEnum
+    public enum TransactionType
     {
         Income, Expense
     }
