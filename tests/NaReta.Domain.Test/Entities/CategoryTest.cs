@@ -1,5 +1,6 @@
 ﻿using NaReta.Domain.Entities;
 using Shouldly;
+using System.Threading.Channels;
 
 namespace NaReta.Domain.Test.Entities
 {
@@ -23,6 +24,19 @@ namespace NaReta.Domain.Test.Entities
             var act = () => new Category(name);
 
             act.ShouldThrow<ArgumentException>(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
+        }
+
+
+        [Theory]
+        [InlineData("Habitação")]
+        [InlineData("Saúde")]
+        public void ChangeName_ValidParameters_ChangedSuccessfully(string newName)
+        {
+            string name = "Alimentação";
+            var category = new Category(name);
+            category.ChangeName(newName);
+            
+            category.Name.ShouldBe(newName);
         }
     }
 }

@@ -7,10 +7,20 @@
 
         public Category(string name)
         {
-            if (string.IsNullOrWhiteSpace(name))
-                throw new ArgumentException(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
-
             Name = name;
+            Validate();
+        }
+
+        public void ChangeName(string name)
+        {
+            Name = name;
+            Validate();
+        }
+
+        private void Validate()
+        {
+            if (string.IsNullOrWhiteSpace(Name))
+                throw new ArgumentException(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
         }
     }
 }
