@@ -45,8 +45,8 @@ namespace NaReta.Domain.Test.Entities
             const string DESCRIPTION = "Receita 1";
             var category = new Category("Salário");
 
-            var transcation1 = new Transaction(TYPE, amount, date, category, DESCRIPTION);
-            var transcation2 = new Transaction(TYPE, amount, date, category, DESCRIPTION);
+            var transcation1 = new Transaction(1, TYPE, amount, date, category, DESCRIPTION);
+            var transcation2 = new Transaction(1, TYPE, amount, date, category, DESCRIPTION);
 
             List<Transaction> transactions = [transcation1, transcation2];
 
@@ -69,8 +69,8 @@ namespace NaReta.Domain.Test.Entities
             const string DESCRIPTION = "Despesa 1";
             var category = new Category("Salário");
 
-            var transcation1 = new Transaction(TYPE, amount, date, category, DESCRIPTION);
-            var transcation2 = new Transaction(TYPE, amount, date, category, DESCRIPTION);
+            var transcation1 = new Transaction(1, TYPE, amount, date, category, DESCRIPTION);
+            var transcation2 = new Transaction(1, TYPE, amount, date, category, DESCRIPTION);
 
             List<Transaction> transactions = [transcation1, transcation2];
 
@@ -86,13 +86,15 @@ namespace NaReta.Domain.Test.Entities
         [Fact]
         public void CalculateBalance_WhenManyTransaction_ReturnsBalancePositive()
         {
+            var category = new Faker<Category>()
+                .CustomInstantiator(f => new Category(f.Name.JobTitle()));
+
             var faker = new Faker();
             DateTime date = faker.Date.Past();
             const string DESCRIPTION = "Despesa 1";
-            var category = new Category("Salário");
 
-            var transcation1 = new Transaction(TransactionType.Income, faker.Finance.Amount(100, 200), date, category, DESCRIPTION);
-            var transcation2 = new Transaction(TransactionType.Expense, faker.Finance.Amount(1, 100), date, category, DESCRIPTION);
+            var transcation1 = new Transaction(1, TransactionType.Income, faker.Finance.Amount(100, 200), date, category, DESCRIPTION);
+            var transcation2 = new Transaction(1, TransactionType.Expense, faker.Finance.Amount(1, 100), date, category, DESCRIPTION);
 
             List<Transaction> transactions = [transcation1, transcation2];
 

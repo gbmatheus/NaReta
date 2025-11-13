@@ -15,9 +15,10 @@ namespace NaReta.Domain.Test.Entities
             DateTime DATE = new DateTime(2025, 1, 1);
             const string DESCRIPTION = "despesa 1";
             var category = new Category("Alimentação");
+            var accountId = 1;
 
             // Act
-            var transcation = new Transaction(TYPE, AMOUNT, DATE, category, DESCRIPTION);
+            var transcation = new Transaction(accountId, TYPE, AMOUNT, DATE, category, DESCRIPTION);
 
             // Assert
             transcation.ShouldNotBeNull();
@@ -35,9 +36,10 @@ namespace NaReta.Domain.Test.Entities
             DateTime DATE = new DateTime(2025, 1, 1);
             const string DESCRIPTION = "despesa 1";
             var category = new Category("Alimentação");
+            var accountId = 1;
 
             // Act
-            var act = () => new Transaction((TransactionType) 3, AMOUNT, DATE, category, DESCRIPTION);
+            var act = () => new Transaction(accountId, (TransactionType) 3, AMOUNT, DATE, category, DESCRIPTION);
 
             // Assert
             act.ShouldThrow<ArgumentException>(ResourceErrorMessages.TYPE_INVALID);
@@ -54,9 +56,10 @@ namespace NaReta.Domain.Test.Entities
             DateTime DATE = new DateTime(2025, 1, 1);
             const string DESCRIPTION = "despesa 1";
             var category = new Category("Alimentação");
+            var accountId = 1;
 
             // Act
-            var act = () => new Transaction(TYPE, amount, DATE, category, DESCRIPTION);
+            var act = () => new Transaction(accountId, TYPE, amount, DATE, category, DESCRIPTION);
 
             // Assert
             act.ShouldThrow<ArgumentException>(ResourceErrorMessages.AMOUNT_EQUAL_OR_LESS_ZERO);
