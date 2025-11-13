@@ -2,14 +2,15 @@
 {
     public class Category
     {
-        public string Title { get; private set; } = string.Empty;
+        public int Id { get; private set; }
+        public string Name { get; private set; } = string.Empty;
 
-        public Category(string title)
+        public Category(string name)
         {
-            if (string.IsNullOrWhiteSpace(title))
-                throw new ArgumentException(ResourceErrorMessages.TITLE_EMPTY_OR_NULL);
+            if (string.IsNullOrWhiteSpace(name))
+                throw new ArgumentException(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
 
-            Title = title;
+            Name = name;
         }
     }
 }

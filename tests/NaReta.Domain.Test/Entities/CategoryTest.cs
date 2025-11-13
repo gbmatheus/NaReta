@@ -8,21 +8,21 @@ namespace NaReta.Domain.Test.Entities
         [Fact]
         public void Contructor_ValidParameters_CreateCategory()
         {
-            string title = "Alimentação";
-            var category = new Category(title);
+            string name = "Alimentação";
+            var category = new Category(name);
             category.ShouldNotBeNull();
-            category.Title.ShouldBe(title);
+            category.Name.ShouldBe(name);
         }
 
         [Theory]
         [InlineData("")]
         [InlineData(null)]
         [InlineData("      ")]
-        public void Contructor_EmptyOrNullType_ThrowArgumentException(string title)
+        public void Contructor_EmptyOrNullType_ThrowArgumentException(string name)
         {
-            var act = () => new Category(title);
+            var act = () => new Category(name);
 
-            act.ShouldThrow<ArgumentException>(ResourceErrorMessages.TITLE_EMPTY_OR_NULL);
+            act.ShouldThrow<ArgumentException>(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
         }
     }
 }
