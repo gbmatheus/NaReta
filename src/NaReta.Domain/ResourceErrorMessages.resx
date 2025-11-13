@@ -120,6 +120,9 @@
   <data name="AMOUNT_EQUAL_OR_LESS_ZERO" xml:space="preserve">
     <value>Amount equal or less than zero</value>
   </data>
+  <data name="NAME_EMPTY_OR_NULL" xml:space="preserve">
+    <value>Name is empty or null</value>
+  </data>
   <data name="TITLE_EMPTY_OR_NULL" xml:space="preserve">
     <value>Title is empty or null</value>
   </data>

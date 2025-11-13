@@ -70,6 +70,15 @@ namespace NaReta.Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name is empty or null.
+        /// </summary>
+        public static string NAME_EMPTY_OR_NULL {
+            get {
+                return ResourceManager.GetString("NAME_EMPTY_OR_NULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Title is empty or null.
         /// </summary>
         public static string TITLE_EMPTY_OR_NULL {
