@@ -61,11 +61,56 @@ namespace NaReta.Domain {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account name already in use.
+        /// </summary>
+        public static string ACCOUNT_NAME_IN_USE {
+            get {
+                return ResourceManager.GetString("ACCOUNT_NAME_IN_USE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Account not found.
+        /// </summary>
+        public static string ACCOUNT_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("ACCOUNT_NOT_FOUND", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount equal or less than zero.
         /// </summary>
         public static string AMOUNT_EQUAL_OR_LESS_ZERO {
             get {
                 return ResourceManager.GetString("AMOUNT_EQUAL_OR_LESS_ZERO", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category name already exists.
+        /// </summary>
+        public static string CATEGORY_NAME_EXISTS {
+            get {
+                return ResourceManager.GetString("CATEGORY_NAME_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category does not exist.
+        /// </summary>
+        public static string CATEGORY_NOT_EXISTS {
+            get {
+                return ResourceManager.GetString("CATEGORY_NOT_EXISTS", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Category not found.
+        /// </summary>
+        public static string CATEGORY_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("CATEGORY_NOT_FOUND", resourceCulture);
             }
         }
         
@@ -84,6 +129,15 @@ namespace NaReta.Domain {
         public static string TITLE_EMPTY_OR_NULL {
             get {
                 return ResourceManager.GetString("TITLE_EMPTY_OR_NULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction not found.
+        /// </summary>
+        public static string TRANSACTION_NOT_FOUND {
+            get {
+                return ResourceManager.GetString("TRANSACTION_NOT_FOUND", resourceCulture);
             }
         }
         

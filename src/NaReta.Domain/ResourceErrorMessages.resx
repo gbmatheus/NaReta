@@ -120,13 +120,31 @@
   <data name="AMOUNT_EQUAL_OR_LESS_ZERO" xml:space="preserve">
     <value>Amount equal or less than zero</value>
   </data>
+  <data name="CATEGORY_NAME_EXISTS" xml:space="preserve">
+    <value>Category name already exists</value>
+  </data>
+  <data name="CATEGORY_NOT_EXISTS" xml:space="preserve">
+    <value>Category does not exist</value>
+  </data>
   <data name="NAME_EMPTY_OR_NULL" xml:space="preserve">
     <value>Name is empty or null</value>
   </data>
   <data name="TITLE_EMPTY_OR_NULL" xml:space="preserve">
     <value>Title is empty or null</value>
   </data>
+  <data name="ACCOUNT_NAME_IN_USE" xml:space="preserve">
+    <value>Account name already in use</value>
+  </data>
+  <data name="TRANSACTION_NOT_FOUND" xml:space="preserve">
+    <value>Transaction not found</value>
+  </data>
   <data name="TYPE_INVALID" xml:space="preserve">
     <value>Type is invalid</value>
+  </data>
+  <data name="ACCOUNT_NOT_FOUND" xml:space="preserve">
+    <value>Account not found</value>
+  </data>
+  <data name="CATEGORY_NOT_FOUND" xml:space="preserve">
+    <value>Category not found</value>
   </data>
 </root>
