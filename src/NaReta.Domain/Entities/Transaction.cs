@@ -15,6 +15,17 @@ namespace NaReta.Domain.Entities
 
         public Transaction() { }
 
+        public Transaction(Account account, TransactionType type, decimal amount, DateTime date, Category category, string description)
+        {
+            Account = account;
+            Type = type;
+            Amount = amount;
+            Date = date;
+            Category = category;
+            Description = description;
+            Validate();
+        }
+
         public Transaction(int accountId, TransactionType type, decimal amount, DateTime date, Category category, string description)
         {
             AccountId = accountId;
