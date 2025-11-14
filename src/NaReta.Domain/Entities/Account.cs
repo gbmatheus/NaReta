@@ -9,6 +9,8 @@ namespace NaReta.Domain.Entities
         public decimal Balance { get; private set; }
         public List<Transaction> Transactions { get; private set; } = new List<Transaction>();
 
+        public Account() { }
+
         public Account(string name)
         {
             if (string.IsNullOrWhiteSpace(name))
@@ -18,7 +20,7 @@ namespace NaReta.Domain.Entities
 
         public void CalculateBalance(List<Transaction> transactions)
         {
-            Balance = transactions.Sum(transaction => transaction.Type is TransactionType.Income 
+            Balance = transactions.Sum(transaction => transaction.Type is TransactionType.Income
                 ? transaction.Amount
                 : transaction.Amount * -1
             );

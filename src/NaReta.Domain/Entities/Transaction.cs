@@ -13,6 +13,8 @@ namespace NaReta.Domain.Entities
         public int AccountId { get; private set; }
         public Account Account { get; private set; }
 
+        public Transaction() { }
+
         public Transaction(int accountId, TransactionType type, decimal amount, DateTime date, Category category, string description)
         {
             AccountId = accountId;
