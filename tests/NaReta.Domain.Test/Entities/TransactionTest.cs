@@ -39,7 +39,7 @@ namespace NaReta.Domain.Test.Entities
             var accountId = 1;
 
             // Act
-            var act = () => new Transaction(accountId, (TransactionType) 3, AMOUNT, DATE, category, DESCRIPTION);
+            var act = () => new Transaction(accountId, (TransactionType)3, AMOUNT, DATE, category, DESCRIPTION);
 
             // Assert
             act.ShouldThrow<ArgumentException>(ResourceErrorMessages.TYPE_INVALID);
@@ -65,5 +65,166 @@ namespace NaReta.Domain.Test.Entities
             act.ShouldThrow<ArgumentException>(ResourceErrorMessages.AMOUNT_EQUAL_OR_LESS_ZERO);
         }
 
+        [Fact]
+        public void ChangeType_ValidParameters_ChangedSuccessfully()
+        {
+            TransactionType TYPE = TransactionType.Expense;
+            const decimal AMOUNT = 100.02m;
+            DateTime DATE = new DateTime(2025, 1, 1);
+            const string DESCRIPTION = "despesa 1";
+            var category = new Category("Alimentação");
+            var accountId = 1;
+            var transcation = new Transaction(accountId, TYPE, AMOUNT, DATE, category, DESCRIPTION);
+
+            transcation.ChangeType(TransactionType.Income);
+            transcation.Type.ShouldBe(TransactionType.Income);
+        }
+
+        [Fact]
+        public void ChangeAmount_ValidParameters_ChangedSuccessfully()
+        {
+            TransactionType TYPE = TransactionType.Expense;
+            const decimal AMOUNT = 100.02m;
+            DateTime DATE = new DateTime(2025, 1, 1);
+            const string DESCRIPTION = "despesa 1";
+            var category = new Category("Alimentação");
+            var accountId = 1;
+            var transcation = new Transaction(accountId, TYPE, AMOUNT, DATE, category, DESCRIPTION);
+
+            transcation.ChangeAmount(200.01m);
+            transcation.Amount.ShouldBe(200.01m);
+        }
+
+        [Fact]
+        public void ChangeAmount_WhenAmountNegative_ThrowArgumentException()
+        {
+            TransactionType TYPE = TransactionType.Expense;
+            const decimal AMOUNT = 100.02m;
+            DateTime DATE = new DateTime(2025, 1, 1);
+            const string DESCRIPTION = "despesa 1";
+            var category = new Category("Alimentação");
+            var accountId = 1;
+            var transcation = new Transaction(accountId, TYPE, AMOUNT, DATE, category, DESCRIPTION);
+
+            var act = () => transcation.ChangeAmount(-10m);
+
+            act.ShouldThrow<ArgumentException>(ResourceErrorMessages.AMOUNT_EQUAL_OR_LESS_ZERO);
+        }
+
+        [Fact]
+        public void ChangeDate_ValidParameters_ChangedSuccessfully()
+        {
+            TransactionType TYPE = TransactionType.Expense;
+            const decimal AMOUNT = 100.02m;
+            DateTime DATE = new DateTime(2025, 1, 1);
+            const string DESCRIPTION = "despesa 1";
+            var category = new Category("Alimentação");
+            var accountId = 1;
+            var transcation = new Transaction(accountId, TYPE, AMOUNT, DATE, category, DESCRIPTION);
+
+            transcation.ChangeDate(DateTime.Today);
+            transcation.Date.ShouldBe(DateTime.Today);
+        }
+
+        [Fact]
+        public void ChangeDescription_ValidParameters_ChangedSuccessfully()
+        {
+            TransactionType TYPE = TransactionType.Expense;
+            const decimal AMOUNT = 100.02m;
+            DateTime DATE = new DateTime(2025, 1, 1);
+            const string DESCRIPTION = "despesa 1";
+            var category = new Category("Alimentação");
+            var accountId = 1;
+            var transcation = new Transaction(accountId, TYPE, AMOUNT, DATE, category, DESCRIPTION);
+
+            transcation.ChangeDescription("Despesa 2");
+            transcation.Description.ShouldBe("Despesa 2");
+        }
+
+        [Fact]
+        public void ChangeCategory_ValidParameters_ChangedSuccessfully()
+        {
+            TransactionType TYPE = TransactionType.Expense;
+            const decimal AMOUNT = 100.02m;
+            DateTime DATE = new DateTime(2025, 1, 1);
+            const string DESCRIPTION = "despesa 1";
+            var category = new Category("Alimentação");
+            var accountId = 1;
+            var transcation = new Transaction(accountId, TYPE, AMOUNT, DATE, category, DESCRIPTION);
+            var newCategory = new Category("Alimentação");
+
+            transcation.ChangeCategory(newCategory);
+            transcation.Category.ShouldBe(newCategory);
+        }
+
+        [Fact]
+        public void ApplyChanges_ValidParameter_ChangedAttributeTransaciont()
+        {
+            TransactionType TYPE = TransactionType.Expense;
+            const decimal AMOUNT = 100.02m;
+            DateTime DATE = new DateTime(2025, 1, 1);
+            const string DESCRIPTION = "despesa 1";
+            var category = new Category("Alimentação");
+            var accountId = 1;
+            var transcation = new Transaction(accountId, TYPE, AMOUNT, DATE, category, DESCRIPTION);
+
+            TransactionType newType = TransactionType.Income;
+            const decimal NEW_AMOUNT = 200.02m;
+            DateTime newDate = DateTime.Today;
+            const string NEW_DESCRIPTION = "nova despesa";
+            var newCategory = new Category("Transporte");
+
+            transcation.ApplyChanges(newType, NEW_AMOUNT, newDate, newCategory, NEW_DESCRIPTION);
+
+            transcation.Type.ShouldBe(newType);
+            transcation.Category.ShouldBe(newCategory);
+            transcation.Amount.ShouldBe(NEW_AMOUNT);
+            transcation.Date.ShouldBe(newDate);
+            transcation.Description.ShouldBe(NEW_DESCRIPTION);
+        }
+
+        [Fact]
+        public void ApplyChanges_WhenTypeInvalid_ThrowArgumenteException()
+        {
+            TransactionType TYPE = TransactionType.Expense;
+            const decimal AMOUNT = 100.02m;
+            DateTime DATE = new DateTime(2025, 1, 1);
+            const string DESCRIPTION = "despesa 1";
+            var category = new Category("Alimentação");
+            var accountId = 1;
+            var transcation = new Transaction(accountId, TYPE, AMOUNT, DATE, category, DESCRIPTION);
+
+            TransactionType newType = TransactionType.Income;
+            const decimal NEW_AMOUNT = 200.02m;
+            DateTime newDate = DateTime.Today;
+            const string NEW_DESCRIPTION = "nova despesa";
+            var newCategory = new Category("Transporte");
+
+            var act = () => transcation.ApplyChanges((TransactionType)3, NEW_AMOUNT, newDate, newCategory, NEW_DESCRIPTION);
+
+            act.ShouldThrow<ArgumentException>(ResourceErrorMessages.TYPE_INVALID);
+        }
+
+        [Fact]
+        public void ApplyChanges_WhenAmountNegative_ThrowArgumenteException()
+        {
+            TransactionType TYPE = TransactionType.Expense;
+            const decimal AMOUNT = 100.02m;
+            DateTime DATE = new DateTime(2025, 1, 1);
+            const string DESCRIPTION = "despesa 1";
+            var category = new Category("Alimentação");
+            var accountId = 1;
+            var transcation = new Transaction(accountId, TYPE, AMOUNT, DATE, category, DESCRIPTION);
+
+            TransactionType newType = TransactionType.Income;
+            const decimal NEW_AMOUNT = -1m;
+            DateTime newDate = DateTime.Today;
+            const string NEW_DESCRIPTION = "nova despesa";
+            var newCategory = new Category("Transporte");
+
+            var act = () => transcation.ApplyChanges(newType, NEW_AMOUNT, newDate, newCategory, NEW_DESCRIPTION);
+
+            act.ShouldThrow<ArgumentException>(ResourceErrorMessages.TYPE_INVALID);
+        }
     }
 }
