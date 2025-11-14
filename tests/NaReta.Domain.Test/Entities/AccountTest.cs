@@ -36,6 +36,56 @@ namespace NaReta.Domain.Test.Entities
         }
 
         [Fact]
+        public void Contructor_WhenTransacionsEmpty_ReturnsBalanceZero()
+        {
+            var faker = new Faker();
+            var name = faker.Person.FirstName;
+            var transactions = new List<Transaction>();
+
+            var account = new Account(
+                name,
+                transactions
+            );
+
+            account.ShouldNotBeNull();
+            account.Name.ShouldBe(name);
+            account.Balance.ShouldBe(0);
+        }
+
+        [Fact]
+        public void Contructor_WhenTransacionsExists_ReturnsBalanceZero()
+        {
+            var categoryFaker = new Faker<Category>()
+                .CustomInstantiator(f => new Category(f.Name.JobTitle()));
+
+            var transactionFaker = new Faker<Transaction>()
+                .CustomInstantiator(f => new Transaction(
+                    1,
+                    TransactionType.Income,
+                    f.Finance.Amount(1),
+                    f.Date.Past(),
+                    categoryFaker.Generate(),
+                    f.Commerce.Product()
+                ));
+
+            var transaction1 = transactionFaker.Generate();
+            var transaction2 = transactionFaker.Generate();
+            List<Transaction> transactions = [transaction1, transaction2];
+
+            var faker = new Faker();
+            var name = faker.Person.FirstName;
+
+            var account = new Account(
+                name,
+                transactions
+            );
+
+            account.ShouldNotBeNull();
+            account.Name.ShouldBe(name);
+            account.Balance.ShouldBe(transaction1.Amount + transaction2.Amount);
+        }
+
+        [Fact]
         public void CalculateBalance_WhenTransactionIncome_ReturnsBalancePositive()
         {
             var faker = new Faker();
@@ -48,14 +98,13 @@ namespace NaReta.Domain.Test.Entities
             var transcation1 = new Transaction(1, TYPE, amount, date, category, DESCRIPTION);
             var transcation2 = new Transaction(1, TYPE, amount, date, category, DESCRIPTION);
 
-            List<Transaction> transactions = [transcation1, transcation2];
-
             var name = faker.Person.FirstName;
             var account = new Account(
                 name
             );
 
-            account.CalculateBalance(transactions);
+            account.AddTransaction(transcation1);
+            account.AddTransaction(transcation2);
             account.Balance.ShouldBe(transcation1.Amount + transcation2.Amount);
         }
 
@@ -72,19 +121,18 @@ namespace NaReta.Domain.Test.Entities
             var transcation1 = new Transaction(1, TYPE, amount, date, category, DESCRIPTION);
             var transcation2 = new Transaction(1, TYPE, amount, date, category, DESCRIPTION);
 
-            List<Transaction> transactions = [transcation1, transcation2];
-
             var name = faker.Person.FirstName;
             var account = new Account(
                 name
             );
 
-            account.CalculateBalance(transactions);
+            account.AddTransaction(transcation1);
+            account.AddTransaction(transcation2);
             account.Balance.ShouldBe(0 - (transcation1.Amount + transcation2.Amount));
         }
 
         [Fact]
-        public void CalculateBalance_WhenManyTransaction_ReturnsBalancePositive()
+        public void CalculateBalance_WhenTransactionIncomeGreaterThanExpense_ReturnsBalancePositive()
         {
             var category = new Faker<Category>()
                 .CustomInstantiator(f => new Category(f.Name.JobTitle()));
@@ -96,14 +144,13 @@ namespace NaReta.Domain.Test.Entities
             var transcation1 = new Transaction(1, TransactionType.Income, faker.Finance.Amount(100, 200), date, category, DESCRIPTION);
             var transcation2 = new Transaction(1, TransactionType.Expense, faker.Finance.Amount(1, 100), date, category, DESCRIPTION);
 
-            List<Transaction> transactions = [transcation1, transcation2];
-
             var name = faker.Person.FirstName;
             var account = new Account(
                 name
             );
 
-            account.CalculateBalance(transactions);
+            account.AddTransaction(transcation1);
+            account.AddTransaction(transcation2);
             account.Balance.ShouldBe(transcation1.Amount - transcation2.Amount);
         }
 

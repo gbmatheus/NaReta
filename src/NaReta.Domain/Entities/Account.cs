@@ -11,16 +11,19 @@ namespace NaReta.Domain.Entities
 
         public Account() { }
 
-        public Account(string name)
+        public Account(string name, List<Transaction>? transactions = default)
         {
             if (string.IsNullOrWhiteSpace(name))
                 throw new ArgumentException(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
             Name = name;
+
+            Transactions = transactions ?? new List<Transaction>();
+            CalculateBalance();
         }
 
-        public void CalculateBalance(List<Transaction> transactions)
+        public void CalculateBalance()
         {
-            Balance = transactions.Sum(transaction => transaction.Type is TransactionType.Income
+            Balance = Transactions.Sum(transaction => transaction.Type is TransactionType.Income
                 ? transaction.Amount
                 : transaction.Amount * -1
             );
@@ -29,7 +32,7 @@ namespace NaReta.Domain.Entities
         public void AddTransaction(Transaction transaction)
         {
             Transactions.Add(transaction);
-            CalculateBalance(Transactions);
+            CalculateBalance();
         }
     }
 }
