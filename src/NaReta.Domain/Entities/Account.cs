@@ -4,8 +4,10 @@ namespace NaReta.Domain.Entities
 {
     public class Account
     {
+        public int Id { get; private set; }
         public string Name { get; private set; }
         public decimal Balance { get; private set; }
+        public List<Transaction> Transactions { get; private set; } = new List<Transaction>();
 
         public Account(string name)
         {
@@ -20,6 +22,12 @@ namespace NaReta.Domain.Entities
                 ? transaction.Amount
                 : transaction.Amount * -1
             );
+        }
+
+        public void AddTransaction(Transaction transaction)
+        {
+            Transactions.Add(transaction);
+            CalculateBalance(Transactions);
         }
     }
 }

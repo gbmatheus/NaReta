@@ -106,5 +106,69 @@ namespace NaReta.Domain.Test.Entities
             account.CalculateBalance(transactions);
             account.Balance.ShouldBe(transcation1.Amount - transcation2.Amount);
         }
+
+        [Fact]
+        public void AddTransaction_ValidParamter_RetursList()
+        {
+            var categoryFaker = new Faker<Category>()
+                .CustomInstantiator(f => new Category(f.Name.JobTitle()));
+
+            var transactionFaker = new Faker<Transaction>()
+                .CustomInstantiator(f => new Transaction(
+                    1,
+                    TransactionType.Income,
+                    f.Finance.Amount(1),
+                    f.Date.Past(),
+                    categoryFaker.Generate(),
+                    f.Commerce.Product()
+                ));
+
+            var transaction1 = transactionFaker.Generate();
+            var transaction2 = transactionFaker.Generate();
+
+            var faker = new Faker();
+            var name = faker.Person.FirstName;
+            var account = new Account(
+                name
+            );
+
+            account.AddTransaction(transaction1);
+            account.AddTransaction(transaction2);
+
+            account.Transactions.Count.ShouldBe(2);
+        }
+
+        [Fact]
+        public void AddTransaction_ValidParamter_ReturnsResultBalance()
+        {
+            var categoryFaker = new Faker<Category>()
+                .CustomInstantiator(f => new Category(f.Name.JobTitle()));
+
+            var transactionFaker = new Faker<Transaction>()
+                .CustomInstantiator(f => new Transaction(
+                    1,
+                    TransactionType.Income,
+                    f.Finance.Amount(1),
+                    f.Date.Past(),
+                    categoryFaker.Generate(),
+                    f.Commerce.Product()
+                ));
+
+            var transaction1 = transactionFaker.Generate();
+            var transaction2 = transactionFaker.Generate();
+
+            var faker = new Faker();
+            var name = faker.Person.FirstName;
+            var account = new Account(
+                name
+            );
+
+            account.AddTransaction(transaction1);
+            account.AddTransaction(transaction2);
+
+            account.Transactions.Count.ShouldBe(2);
+            account.Balance.ShouldBe(transaction1.Amount + transaction2.Amount);
+        }
+
     }
 }
