@@ -6,4 +6,5 @@ public interface IAccountWriteOnlyRepository
 {
     Task AddAsync(Account account);
     Task<bool> ExistsByNameAsync(string name);
+    Task<Account?> FindByIdAsync(int id);
 }
