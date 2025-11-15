@@ -1,5 +1,5 @@
 ﻿
-using NaReta.Domain;
+using NaReta.Common;
 using NaReta.Domain.Repositories;
 using NaReta.Domain.Repositories.Transactions;
 

@@ -1,6 +1,5 @@
 ﻿
 using NaReta.Application.UseCases.Account._Common;
-using NaReta.Domain.Repositories;
 using NaReta.Domain.Repositories.Accounts;
 
 namespace NaReta.Application.UseCases.Account.Create;
@@ -25,6 +24,7 @@ internal class ListAccountUseCase : IListAccountUseCase
         {
             output.Add(new OutputAccount
             {
+                Id = account.Id,
                 Name = account.Name,
             });
         }

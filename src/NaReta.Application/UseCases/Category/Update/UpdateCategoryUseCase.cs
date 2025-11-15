@@ -1,10 +1,11 @@
 ﻿
 using NaReta.Application.UseCases.Category._Common;
-using NaReta.Domain;
+using NaReta.Common;
 using NaReta.Domain.Repositories;
 using NaReta.Domain.Repositories.Categories;
 
 namespace NaReta.Application.UseCases.Category.Update;
+
 internal class UpdateCategoryUseCase : IUpdateCategoryUseCase
 {
     private readonly ICategoryWriteOnlyRepository _repository;

@@ -1,12 +1,12 @@
 ﻿using NaReta.Application.UseCases.Category._Common;
-using NaReta.Domain;
+using NaReta.Common;
 using NaReta.Domain.Repositories;
 using NaReta.Domain.Repositories.Categories;
 using DomainEntity = NaReta.Domain.Entities;
 
 namespace NaReta.Application.UseCases.Category.Create;
 
-internal class CreateCategoryUseCase: ICreateCategoryUseCase
+internal class CreateCategoryUseCase : ICreateCategoryUseCase
 {
     private readonly ICategoryWriteOnlyRepository _repository;
     private readonly IUnitOfWork _unitOfWork;

@@ -1,10 +1,11 @@
 ﻿using NaReta.Application.UseCases.Transaction._Common;
-using NaReta.Domain;
+using NaReta.Common;
 using NaReta.Domain.Repositories;
 using NaReta.Domain.Repositories.Categories;
 using NaReta.Domain.Repositories.Transactions;
 
 namespace NaReta.Application.UseCases.Transaction.Update;
+
 internal class UpdateTrasanctionUseCase : IUpdateTrasanctionUseCase
 {
     private readonly ITransactionWriteOnlyRepository _transactionRepository;
@@ -42,7 +43,7 @@ internal class UpdateTrasanctionUseCase : IUpdateTrasanctionUseCase
         return new OutputTransaction
         {
             Id = transaction.Id,
-            AccountId = transaction.AccountId,
+            AccountId = transaction.Account.Id,
             Type = transaction.Type,
             Amount = transaction.Amount,
             Date = transaction.Date,
