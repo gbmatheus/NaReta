@@ -1,4 +1,5 @@
 ﻿using NaReta.Common;
+using NaReta.Common.Exceptions;
 using NaReta.Domain.Enums;
 
 namespace NaReta.Domain.Entities
@@ -72,10 +73,10 @@ namespace NaReta.Domain.Entities
         private void Validate()
         {
             if (Enum.IsDefined(typeof(TransactionType), Type) is false)
-                throw new ArgumentException(ResourceErrorMessages.TYPE_INVALID);
+                throw new DomainException(ResourceErrorMessages.TYPE_INVALID);
 
             if (Amount <= 0)
-                throw new ArgumentException(ResourceErrorMessages.AMOUNT_EQUAL_OR_LESS_ZERO);
+                throw new DomainException(ResourceErrorMessages.AMOUNT_EQUAL_OR_LESS_ZERO);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NaReta.Common;
+using NaReta.Common.Exceptions;
 using NaReta.Domain.Enums;
 
 namespace NaReta.Domain.Entities;
@@ -17,7 +18,7 @@ public class Account
     public Account(string name, List<Transaction>? transactions = default)
     {
         if (string.IsNullOrWhiteSpace(name))
-            throw new ArgumentException(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
+            throw new DomainException(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
         Name = name;
 
         Transactions = transactions ?? new List<Transaction>();

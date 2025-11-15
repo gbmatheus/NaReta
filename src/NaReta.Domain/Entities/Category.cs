@@ -1,4 +1,5 @@
 ﻿using NaReta.Common;
+using NaReta.Common.Exceptions;
 namespace NaReta.Domain.Entities;
 
 public class Category
@@ -25,6 +26,6 @@ public class Category
     private void Validate()
     {
         if (string.IsNullOrWhiteSpace(Name))
-            throw new ArgumentException(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
+            throw new DomainException(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
     }
 }
