@@ -21,9 +21,12 @@ public class TransactionController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> List([FromServices] IListTransactionUseCase useCase)
+    public async Task<IActionResult> List(
+        [FromQuery] int accountId,
+        [FromServices] IListTransactionUseCase useCase
+    )
     {
-        var response = await useCase.ExecuteAsync();
+        var response = await useCase.ExecuteAsync(accountId);
 
         if (!response.Any())
             return NoContent();

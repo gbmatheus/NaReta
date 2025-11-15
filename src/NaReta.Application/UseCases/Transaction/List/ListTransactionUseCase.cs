@@ -12,9 +12,9 @@ internal class ListTransactionUseCase : IListTransactionUseCase
         _repository = repository;
     }
 
-    public async Task<List<OutputTransaction>> ExecuteAsync()
+    public async Task<List<OutputTransaction>> ExecuteAsync(int accountId)
     {
-        var transactions = await _repository.ListAsync();
+        var transactions = await _repository.ListByAccountIdAsync(accountId);
 
         var output = new List<OutputTransaction>();
         foreach (var transaction in transactions)
@@ -22,7 +22,7 @@ internal class ListTransactionUseCase : IListTransactionUseCase
             output.Add(new OutputTransaction
             {
                 Id = transaction.Id,
-                AccountId = transaction.AccountId,
+                AccountId = transaction.Account.Id,
                 Type = transaction.Type,
                 Amount = transaction.Amount,
                 Date = transaction.Date,

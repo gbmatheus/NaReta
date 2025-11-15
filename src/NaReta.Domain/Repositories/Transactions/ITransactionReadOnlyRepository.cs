@@ -5,5 +5,6 @@ namespace NaReta.Domain.Repositories.Transactions
     public interface ITransactionReadOnlyRepository
     {
         Task<List<Transaction>> ListAsync();
+        Task<List<Transaction>> ListByAccountIdAsync(int  accountId);
     }
 }

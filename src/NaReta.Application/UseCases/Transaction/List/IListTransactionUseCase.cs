@@ -4,5 +4,5 @@ namespace NaReta.Application.UseCases.Transaction.List;
 
 public interface IListTransactionUseCase
 {
-    Task<List<OutputTransaction>> ExecuteAsync();
+    Task<List<OutputTransaction>> ExecuteAsync(int accountId);
 }
