@@ -1,4 +1,5 @@
-﻿using NaReta.Domain.Enums;
+﻿using NaReta.Common;
+using NaReta.Domain.Enums;
 
 namespace NaReta.Domain.Entities
 {
@@ -10,8 +11,9 @@ namespace NaReta.Domain.Entities
         public DateTime Date { get; private set; }
         public string Description { get; private set; } = string.Empty;
         public Category Category { get; private set; }
-        public int AccountId { get; private set; }
         public Account Account { get; private set; }
+        public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
+        public DateTime UpdatedAt { get; private set; } = DateTime.UtcNow;
 
         public Transaction() { }
 
@@ -24,17 +26,7 @@ namespace NaReta.Domain.Entities
             Category = category;
             Description = description;
             Validate();
-        }
-
-        public Transaction(int accountId, TransactionType type, decimal amount, DateTime date, Category category, string description)
-        {
-            AccountId = accountId;
-            Type = type;
-            Amount = amount;
-            Date = date;
-            Category = category;
-            Description = description;
-            Validate();
+            Account.AddTransaction(this);
         }
 
         public void ApplyChanges(TransactionType type, decimal amount, DateTime date, Category category, string description)
