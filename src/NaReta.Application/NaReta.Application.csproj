@@ -7,10 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="12.1.0" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="8.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\NaReta.Common\NaReta.Common.csproj" />
     <ProjectReference Include="..\NaReta.Domain\NaReta.Domain.csproj" />
   </ItemGroup>
 
