@@ -1,8 +1,8 @@
 ﻿using NaReta.Domain.Enums;
 
-namespace NaReta.Application.UseCases.Transaction.Create;
+namespace NaReta.Application.UseCases.Transaction._Common;
 
-public class InputCreateTransaction
+public class InputTransaction
 {
     public TransactionType Type { get; set; }
     public decimal Amount { get; set; }

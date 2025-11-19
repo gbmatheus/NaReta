@@ -3,5 +3,5 @@
 namespace NaReta.Application.UseCases.Transaction.Update;
 public interface IUpdateTrasanctionUseCase
 {
-    Task<OutputTransaction> ExecuteAsync(int id, InputUpdateTransaction input);
+    Task<OutputTransaction> ExecuteAsync(int id, InputTransaction input);
 }

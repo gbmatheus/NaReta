@@ -22,7 +22,7 @@ internal class UpdateTrasanctionUseCase : IUpdateTrasanctionUseCase
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<OutputTransaction> ExecuteAsync(int id, InputUpdateTransaction input)
+    public async Task<OutputTransaction> ExecuteAsync(int id, InputTransaction input)
     {
         var transaction = await _transactionRepository.FindByIdAsync(id);
         if (transaction is null)

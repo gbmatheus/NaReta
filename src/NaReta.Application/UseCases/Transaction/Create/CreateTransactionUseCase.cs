@@ -30,7 +30,7 @@ internal class CreateTransactionUseCase : ICreateTransactionUseCase
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<OutputTransaction> ExecuteAsync(int accountId, InputCreateTransaction input)
+    public async Task<OutputTransaction> ExecuteAsync(int accountId, InputTransaction input)
     {
         var account = await _accountRepository.FindByIdAsync(accountId);
         if (account is null)
@@ -59,7 +59,7 @@ internal class CreateTransactionUseCase : ICreateTransactionUseCase
         };
     }
 
-    private async Task ValidateAsync(InputCreateTransaction input)
+    private async Task ValidateAsync(InputTransaction input)
     {
         var validator = new TransactionValidator();
         var result = validator.Validate(input);

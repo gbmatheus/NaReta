@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NaReta.Application.UseCases.Transaction._Common;
 using NaReta.Application.UseCases.Transaction.Create;
 using NaReta.Application.UseCases.Transaction.Delete;
 using NaReta.Application.UseCases.Transaction.List;
@@ -11,7 +12,7 @@ public class TransactionController : ControllerBase
 {
     [HttpPost]
     public async Task<IActionResult> Create(
-        [FromBody] InputCreateTransaction request,
+        [FromBody] InputTransaction request,
         [FromQuery] int accountId,
         [FromServices] ICreateTransactionUseCase useCase)
     {
@@ -36,7 +37,7 @@ public class TransactionController : ControllerBase
 
     [HttpPut("{id}")]
     public async Task<IActionResult> Update(
-        [FromBody] InputUpdateTransaction request,
+        [FromBody] InputTransaction request,
         [FromRoute] int id,
         [FromServices] IUpdateTrasanctionUseCase useCase)
     {
