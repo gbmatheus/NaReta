@@ -1,4 +1,5 @@
-﻿using NaReta.Application.UseCases.Transaction._Common;
+﻿using AutoMapper;
+using NaReta.Application.UseCases.Transaction._Common;
 using NaReta.Common;
 using NaReta.Common.Exceptions;
 using NaReta.Domain.Repositories;
@@ -12,15 +13,18 @@ internal class UpdateTrasanctionUseCase : IUpdateTrasanctionUseCase
     private readonly ITransactionWriteOnlyRepository _transactionRepository;
     private readonly ICategoryWriteOnlyRepository _categoryRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
     public UpdateTrasanctionUseCase(
         ITransactionWriteOnlyRepository transactionRepository,
         ICategoryWriteOnlyRepository categoryRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork,
+        IMapper mapper)
     {
         _transactionRepository = transactionRepository;
         _categoryRepository = categoryRepository;
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<OutputTransaction> ExecuteAsync(int id, InputTransaction input)
@@ -40,17 +44,7 @@ internal class UpdateTrasanctionUseCase : IUpdateTrasanctionUseCase
         _transactionRepository.Update(transaction);
         await _unitOfWork.Commit();
 
-        // [TODO] Mapper
-        return new OutputTransaction
-        {
-            Id = transaction.Id,
-            AccountId = transaction.Account.Id,
-            Type = transaction.Type,
-            Amount = transaction.Amount,
-            Date = transaction.Date,
-            Description = transaction.Description,
-            Category = transaction.Category.Name
-        };
+        return _mapper.Map<OutputTransaction>(transaction);
     }
 
     private void Validate(InputTransaction input)

@@ -1,4 +1,5 @@
-﻿using NaReta.Application.UseCases.Transaction._Common;
+﻿using AutoMapper;
+using NaReta.Application.UseCases.Transaction._Common;
 using NaReta.Domain.Repositories.Transactions;
 
 namespace NaReta.Application.UseCases.Transaction.List;
@@ -6,31 +7,18 @@ namespace NaReta.Application.UseCases.Transaction.List;
 internal class ListTransactionUseCase : IListTransactionUseCase
 {
     private readonly ITransactionReadOnlyRepository _repository;
+    private readonly IMapper _mapper;
 
-    public ListTransactionUseCase(ITransactionReadOnlyRepository repository)
+    public ListTransactionUseCase(ITransactionReadOnlyRepository repository, IMapper mapper)
     {
         _repository = repository;
+        _mapper = mapper;
     }
 
     public async Task<List<OutputTransaction>> ExecuteAsync(int accountId)
     {
         var transactions = await _repository.ListByAccountIdAsync(accountId);
 
-        var output = new List<OutputTransaction>();
-        foreach (var transaction in transactions)
-        {
-            output.Add(new OutputTransaction
-            {
-                Id = transaction.Id,
-                AccountId = transaction.Account.Id,
-                Type = transaction.Type,
-                Amount = transaction.Amount,
-                Date = transaction.Date,
-                Description = transaction.Description,
-                Category = transaction.Category.Name
-            });
-        }
-
-        return output;
+        return _mapper.Map<List<OutputTransaction>>(transactions);
     }
 }

@@ -1,4 +1,5 @@
-﻿using NaReta.Application.UseCases.Transaction;
+﻿using AutoMapper;
+using NaReta.Application.UseCases.Transaction;
 using NaReta.Application.UseCases.Transaction._Common;
 using NaReta.Application.UseCases.Transaction.Create;
 using NaReta.Common;
@@ -17,17 +18,17 @@ internal class CreateTransactionUseCase : ICreateTransactionUseCase
     private readonly ITransactionWriteOnlyRepository _transactionRepository;
     private readonly ICategoryWriteOnlyRepository _categoryRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
     public CreateTransactionUseCase(
-        ITransactionWriteOnlyRepository transactionRepository,
-        IAccountWriteOnlyRepository accountRepository,
-        ICategoryWriteOnlyRepository categoryRepository,
-        IUnitOfWork unitOfWork)
+        IAccountWriteOnlyRepository accountRepository, ITransactionWriteOnlyRepository transactionRepository,
+        ICategoryWriteOnlyRepository categoryRepository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _accountRepository = accountRepository;
         _transactionRepository = transactionRepository;
         _categoryRepository = categoryRepository;
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<OutputTransaction> ExecuteAsync(int accountId, InputTransaction input)
@@ -46,17 +47,7 @@ internal class CreateTransactionUseCase : ICreateTransactionUseCase
         await _transactionRepository.AddSync(transaction);
         await _unitOfWork.Commit();
 
-        // [TODO] Mapper
-        return new OutputTransaction
-        {
-            Id = transaction.Id,
-            AccountId = accountId,
-            Type = transaction.Type,
-            Amount = transaction.Amount,
-            Date = transaction.Date,
-            Description = transaction.Description,
-            Category = transaction.Category.Name
-        };
+        return _mapper.Map<OutputTransaction>(transaction);
     }
 
     private async Task ValidateAsync(InputTransaction input)

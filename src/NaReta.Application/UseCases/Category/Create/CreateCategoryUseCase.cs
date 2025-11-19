@@ -1,4 +1,5 @@
-﻿using NaReta.Application.UseCases.Category._Common;
+﻿using AutoMapper;
+using NaReta.Application.UseCases.Category._Common;
 using NaReta.Common;
 using NaReta.Common.Exceptions;
 using NaReta.Domain.Repositories;
@@ -11,26 +12,28 @@ internal class CreateCategoryUseCase : ICreateCategoryUseCase
 {
     private readonly ICategoryWriteOnlyRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public CreateCategoryUseCase(ICategoryWriteOnlyRepository repository, IUnitOfWork unitOfWork)
+    public CreateCategoryUseCase(ICategoryWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
     {
         _repository = repository;
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<OutputCategory> ExecuteAsync(InputCategory input)
     {
-        var exists = await _repository.ExistsByNameAsync(input.Title);
-        if (exists)
-            throw new Exception(ResourceErrorMessages.CATEGORY_NAME_EXISTS);
+        await ValidateAsync(input);
 
         var category = new DomainEntity.Category(input.Name);
         await _repository.AddAsync(category);
         await _unitOfWork.Commit();
 
-        return new OutputCategory
+        return _mapper.Map<OutputCategory>(category);
+    }
+
     private async Task ValidateAsync(InputCategory input)
-        {
+    {
         var validator = new CategoryValidator();
         var result = validator.Validate(input);
 

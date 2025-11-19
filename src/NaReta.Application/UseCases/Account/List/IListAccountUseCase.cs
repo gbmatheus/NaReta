@@ -4,5 +4,5 @@ namespace NaReta.Application.UseCases.Account.Create;
 
 public interface IListAccountUseCase
 {
-    Task<List<OutputAccount>> ExecuteAsync();
+    Task<List<OutputShortAccount>> ExecuteAsync();
 }

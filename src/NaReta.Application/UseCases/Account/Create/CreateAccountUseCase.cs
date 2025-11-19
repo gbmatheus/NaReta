@@ -1,4 +1,5 @@
-﻿using FluentValidation.Results;
+﻿using AutoMapper;
+using FluentValidation.Results;
 using NaReta.Application.UseCases.Account._Common;
 using NaReta.Common;
 using NaReta.Common.Exceptions;
@@ -12,13 +13,13 @@ internal class CreateAccountUseCase : ICreateAccountUseCase
 {
     private readonly IAccountWriteOnlyRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IMapper _mapper;
 
-    public CreateAccountUseCase(
-        IAccountWriteOnlyRepository accountWriteOnlyRepository,
-        IUnitOfWork unitOfWork)
+    public CreateAccountUseCase(IAccountWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _repository = accountWriteOnlyRepository;
+        _repository = repository;
         _unitOfWork = unitOfWork;
+        _mapper = mapper;
     }
 
     public async Task<OutputAccount> ExecuteAsync(InputCreateAccount input)
@@ -29,10 +30,7 @@ internal class CreateAccountUseCase : ICreateAccountUseCase
         await _repository.AddAsync(account);
         await _unitOfWork.Commit();
 
-        return new OutputAccount
-        {
-            Name = account.Name,
-        };
+        return _mapper.Map<OutputAccount>(account);
     }
 
     private async Task ValidateAsync(InputCreateAccount input)
