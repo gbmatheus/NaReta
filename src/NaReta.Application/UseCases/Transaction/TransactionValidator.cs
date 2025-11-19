@@ -1,6 +1,5 @@
 ﻿using FluentValidation;
 using NaReta.Application.UseCases.Transaction._Common;
-using NaReta.Application.UseCases.Transaction.Create;
 using NaReta.Common;
 
 namespace NaReta.Application.UseCases.Transaction;

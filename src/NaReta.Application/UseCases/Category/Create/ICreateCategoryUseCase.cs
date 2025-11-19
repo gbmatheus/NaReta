@@ -3,5 +3,5 @@
 namespace NaReta.Application.UseCases.Category.Create;
 public interface ICreateCategoryUseCase
 {
-    Task<OutputCategory> ExecuteAsync(InputCreateCategory category);
+    Task<OutputCategory> ExecuteAsync(InputCategory category);
 }

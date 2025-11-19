@@ -3,5 +3,5 @@
 namespace NaReta.Application.UseCases.Category.Update;
 public interface IUpdateCategoryUseCase
 {
-    Task<OutputCategory> ExecuteAsync(int id, InputUpdateCategory input);
+    Task<OutputCategory> ExecuteAsync(int id, InputCategory input);
 }
