@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NaReta.Application.DTO;
+using NaReta.Application.UseCases.Account._Common;
 using NaReta.Application.UseCases.Account.Create;
 using NaReta.Application.UseCases.Account.Get;
 
@@ -8,6 +10,8 @@ namespace NaReta.Api.Controllers;
 public class AccountController : ControllerBase
 {
     [HttpPost]
+    [ProducesResponseType(typeof(OutputAccount), statusCode: StatusCodes.Status201Created)]
+    [ProducesResponseType(typeof(ResponseErrorDTO), statusCode: StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(
        [FromBody] InputCreateAccount request,
        [FromServices] ICreateAccountUseCase useCase)
@@ -18,6 +22,8 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(List<OutputShortAccount>), statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
     public async Task<IActionResult> List([FromServices] IListAccountUseCase useCase)
     {
         var response = await useCase.ExecuteAsync();
@@ -29,6 +35,8 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [ProducesResponseType(typeof(OutputAccount), statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ResponseErrorDTO), statusCode: StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Get(
         [FromRoute] int id,
         [FromServices] IGetAccountUseCase useCase)
