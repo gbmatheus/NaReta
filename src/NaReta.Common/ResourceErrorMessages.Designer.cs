@@ -97,6 +97,15 @@ namespace NaReta.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Category name must be between 3 and 50 characters.
+        /// </summary>
+        public static string CATEGORY_NAME_INVALID_LENGTH {
+            get {
+                return ResourceManager.GetString("CATEGORY_NAME_INVALID_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Category does not exist.
         /// </summary>
         public static string CATEGORY_NOT_EXISTS {
@@ -147,6 +156,15 @@ namespace NaReta.Common {
         public static string NAME_EMPTY_OR_NULL {
             get {
                 return ResourceManager.GetString("NAME_EMPTY_OR_NULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name is required.
+        /// </summary>
+        public static string NAME_REQUIRED {
+            get {
+                return ResourceManager.GetString("NAME_REQUIRED", resourceCulture);
             }
         }
         

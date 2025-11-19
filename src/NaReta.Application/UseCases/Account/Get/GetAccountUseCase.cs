@@ -24,8 +24,7 @@ internal class GetAccountUseCase : IGetAccountUseCase
         var account = await _repository.FindByIdAsync(id);
 
         if (account is null)
-            // [TODO] NotFound
-            throw new Exception(ResourceErrorMessages.ACCOUNT_NOT_FOUND);
+            throw new NotFoundException(ResourceErrorMessages.ACCOUNT_NOT_FOUND);
 
         // Error - Balanço com o ultimo valor da transação
         //account.CalculateBalance();

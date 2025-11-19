@@ -144,6 +144,9 @@
   <data name="DESCRIPTION_INVALID_LENGTH" xml:space="preserve">
     <value>Description must be between 3 and 255 characters</value>
   </data>
+  <data name="CATEGORY_NAME_INVALID_LENGTH" xml:space="preserve">
+    <value>Category name must be between 3 and 50 characters</value>
+  </data>
   <data name="NAME_EMPTY_OR_NULL" xml:space="preserve">
     <value>Name is empty or null</value>
   </data>
@@ -158,5 +161,8 @@
   </data>
   <data name="UNKNOW_ERROR" xml:space="preserve">
     <value>Unknown error</value>
+  </data>
+  <data name="NAME_REQUIRED" xml:space="preserve">
+    <value>Name is required</value>
   </data>
 </root>

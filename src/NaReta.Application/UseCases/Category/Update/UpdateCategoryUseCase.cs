@@ -21,7 +21,7 @@ internal class UpdateCategoryUseCase : IUpdateCategoryUseCase
     {
         var category = await _repository.FindByIdAsync(id);
         if (category is null)
-            // NotFound
+            throw new NotFoundException(ResourceErrorMessages.CATEGORY_NOT_FOUND);
             throw new Exception(ResourceErrorMessages.CATEGORY_NOT_FOUND);
 
         var categoryExists = await _repository.ExistsByNameAsync(input.Name);

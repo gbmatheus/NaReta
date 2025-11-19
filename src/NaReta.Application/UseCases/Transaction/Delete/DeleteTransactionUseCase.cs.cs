@@ -1,5 +1,6 @@
 ﻿
 using NaReta.Common;
+using NaReta.Common.Exceptions;
 using NaReta.Domain.Repositories;
 using NaReta.Domain.Repositories.Transactions;
 
@@ -23,7 +24,7 @@ internal class DeleteTransactionUseCase : IDeleteTransactionUseCase
         var transaction = await _repository.FindByIdAsync(id);
 
         if (transaction is null)
-            throw new Exception(ResourceErrorMessages.TRANSACTION_NOT_FOUND);
+            throw new NotFoundException(ResourceErrorMessages.TRANSACTION_NOT_FOUND);
 
         _repository.Remove(transaction);
         await _unitOfWork.Commit();
