@@ -9,7 +9,8 @@ namespace NaReta.UnitTest.Entities;
 
 public class TransactionTest
 {
-    [Fact]
+    [Fact(DisplayName = nameof(Constructor_ValidParameters_CreateTransaction))]
+    [Trait("Domain", "Entity - Transaction")]
     public void Constructor_ValidParameters_CreateTransaction()
     {
         var account = AccountEntityBuildes.Build();
@@ -32,7 +33,8 @@ public class TransactionTest
         transcation.Description.ShouldBe(DESCRIPTION);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(Constructor_EmptyOrNullType_ThrowDomainException))]
+    [Trait("Domain", "Entity - Transaction")]
     public void Constructor_EmptyOrNullType_ThrowDomainException()
     {
         var account = AccountEntityBuildes.Build();
@@ -50,7 +52,8 @@ public class TransactionTest
         act.ShouldThrow<DomainException>(ResourceErrorMessages.TYPE_INVALID);
     }
 
-    [Theory]
+    [Theory(DisplayName = nameof(Constructor_AmountEqualOrLessThanZero_ThrowDomainException))]
+    [Trait("Domain", "Entity - Transaction")]
     [InlineData(0)]
     [InlineData(-1)]
     [InlineData(-19232)]
@@ -71,7 +74,8 @@ public class TransactionTest
         act.ShouldThrow<DomainException>(ResourceErrorMessages.AMOUNT_EQUAL_OR_LESS_ZERO);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(ChangeType_ValidParameters_ChangedSuccessfully))]
+    [Trait("Domain", "Entity - Transaction")]
     public void ChangeType_ValidParameters_ChangedSuccessfully()
     {
         var account = AccountEntityBuildes.Build();
@@ -88,7 +92,8 @@ public class TransactionTest
         transcation.Type.ShouldBe(TransactionType.Income);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(ChangeAmount_ValidParameters_ChangedSuccessfully))]
+    [Trait("Domain", "Entity - Transaction")]
     public void ChangeAmount_ValidParameters_ChangedSuccessfully()
     {
         var account = AccountEntityBuildes.Build();
@@ -105,7 +110,8 @@ public class TransactionTest
         transcation.Amount.ShouldBe(200.01m);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(ChangeAmount_WhenAmountNegative_ThrowDomainException))]
+    [Trait("Domain", "Entity - Transaction")]
     public void ChangeAmount_WhenAmountNegative_ThrowDomainException()
     {
         var account = AccountEntityBuildes.Build();
@@ -123,7 +129,8 @@ public class TransactionTest
         act.ShouldThrow<DomainException>(ResourceErrorMessages.AMOUNT_EQUAL_OR_LESS_ZERO);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(ChangeDate_ValidParameters_ChangedSuccessfully))]
+    [Trait("Domain", "Entity - Transaction")]
     public void ChangeDate_ValidParameters_ChangedSuccessfully()
     {
         var account = AccountEntityBuildes.Build();
@@ -140,7 +147,8 @@ public class TransactionTest
         transcation.Date.ShouldBe(DateTime.Today);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(ChangeDescription_ValidParameters_ChangedSuccessfully))]
+    [Trait("Domain", "Entity - Transaction")]
     public void ChangeDescription_ValidParameters_ChangedSuccessfully()
     {
         var account = AccountEntityBuildes.Build();
@@ -157,7 +165,8 @@ public class TransactionTest
         transcation.Description.ShouldBe("Despesa 2");
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(ChangeCategory_ValidParameters_ChangedSuccessfully))]
+    [Trait("Domain", "Entity - Transaction")]
     public void ChangeCategory_ValidParameters_ChangedSuccessfully()
     {
         var account = AccountEntityBuildes.Build();
@@ -175,7 +184,8 @@ public class TransactionTest
         transcation.Category.ShouldBe(newCategory);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(ApplyChanges_ValidParameter_ChangedAttributeTransaciont))]
+    [Trait("Domain", "Entity - Transaction")]
     public void ApplyChanges_ValidParameter_ChangedAttributeTransaciont()
     {
         var account = AccountEntityBuildes.Build();
@@ -203,7 +213,8 @@ public class TransactionTest
         transcation.Description.ShouldBe(NEW_DESCRIPTION);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(ApplyChanges_WhenTypeInvalid_ThrowDomainException))]
+    [Trait("Domain", "Entity - Transaction")]
     public void ApplyChanges_WhenTypeInvalid_ThrowDomainException()
     {
         var account = AccountEntityBuildes.Build();
@@ -227,6 +238,8 @@ public class TransactionTest
     }
 
     [Fact]
+    [Fact(DisplayName = nameof(Constructor_ValidParameters_CreateTransaction))]
+    [Trait("Domain", "Entity - Transaction")]
     public void ApplyChanges_WhenAmountNegative_ThrowDomainException()
     {
         var account = AccountEntityBuildes.Build();

@@ -10,7 +10,8 @@ namespace NaReta.UnitTest.Entities;
 
 public class AccountTest
 {
-    [Fact]
+    [Fact(DisplayName = nameof(Contructor_ValidParameters_CreateAccount))]
+    [Trait("Domain", "Entity - Account")]
     public void Contructor_ValidParameters_CreateAccount()
     {
         var faker = new Faker();
@@ -26,7 +27,8 @@ public class AccountTest
         account.Transactions.ShouldBeEmpty();
     }
 
-    [Theory]
+    [Theory(DisplayName = nameof(Contructor_WhenNameEmptyOrNull_ThrowDomainException))]
+    [Trait("Domain", "Entity - Account")]
     [InlineData("")]
     [InlineData("      ")]
     [InlineData(null)]
@@ -39,25 +41,27 @@ public class AccountTest
         act.ShouldThrow<DomainException>(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(CalculateBalance_WhenTransactionIncome_ReturnsBalancePositive))]
+    [Trait("Domain", "Entity - Account")]
     public void CalculateBalance_WhenTransactionIncome_ReturnsBalancePositive()
     {
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuildes.Build();
-        
+
         var faker = new Faker();
         TransactionType TYPE = TransactionType.Income;
         decimal amount = faker.Finance.Amount(1);
         DateTime date = faker.Date.Past();
         const string DESCRIPTION = "Receita 1";
-        
+
         var transcation1 = new Transaction(account, TYPE, amount, date, category, DESCRIPTION);
         var transcation2 = new Transaction(account, TYPE, amount, date, category, DESCRIPTION);
 
         account.Balance.ShouldBe(transcation1.Amount + transcation2.Amount);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(CalculateBalance_WhenTransactionExpense_ReturnsBalanceNegative))]
+    [Trait("Domain", "Entity - Account")]
     public void CalculateBalance_WhenTransactionExpense_ReturnsBalanceNegative()
     {
         var category = CategoryEntityBuilder.Build();
@@ -75,7 +79,8 @@ public class AccountTest
         account.Balance.ShouldBe(0 - (transcation1.Amount + transcation2.Amount));
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(CalculateBalance_WhenTransactionIncomeGreaterThanExpense_ReturnsBalancePositive))]
+    [Trait("Domain", "Entity - Account")]
     public void CalculateBalance_WhenTransactionIncomeGreaterThanExpense_ReturnsBalancePositive()
     {
         var category = CategoryEntityBuilder.Build();
@@ -93,7 +98,8 @@ public class AccountTest
         account.Balance.ShouldBe(transcation1.Amount - transcation2.Amount);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(AddTransaction_ValidParamter_RetursList))]
+    [Trait("Domain", "Entity - Account")]
     public void AddTransaction_ValidParamter_RetursList()
     {
         var category = CategoryEntityBuilder.Build();
@@ -116,7 +122,8 @@ public class AccountTest
         account.Transactions.Count.ShouldBe(2);
     }
 
-    [Fact]
+    [Fact(DisplayName = nameof(AddTransaction_ValidParamter_ReturnsResultBalance))]
+    [Trait("Domain", "Entity - Account")]
     public void AddTransaction_ValidParamter_ReturnsResultBalance()
     {
         var category = CategoryEntityBuilder.Build();

@@ -7,7 +7,8 @@ namespace NaReta.UnitTest.Entities;
 
 public class CategoryTest
 {
-    [Fact]
+    [Fact(DisplayName = nameof(Contructor_ValidParameters_CreateCategory))]
+    [Trait("Domain", "Entity - Category")]
     public void Contructor_ValidParameters_CreateCategory()
     {
         string name = "Alimentação";
@@ -16,7 +17,8 @@ public class CategoryTest
         category.Name.ShouldBe(name);
     }
 
-    [Theory]
+    [Theory(DisplayName = nameof(Contructor_EmptyOrNullType_ThrowDomainException))]
+    [Trait("Domain", "Entity - Category")]
     [InlineData("")]
     [InlineData(null)]
     [InlineData("      ")]
@@ -27,8 +29,8 @@ public class CategoryTest
         act.ShouldThrow<DomainException>(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
     }
 
-
-    [Theory]
+    [Theory(DisplayName = nameof(ChangeName_ValidParameters_ChangedSuccessfully))]
+    [Trait("Domain", "Entity - Category")]
     [InlineData("Habitação")]
     [InlineData("Saúde")]
     public void ChangeName_ValidParameters_ChangedSuccessfully(string newName)
