@@ -115,6 +115,33 @@ namespace NaReta.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Date out of range, must be between the beginning of the century and the next 5 years..
+        /// </summary>
+        public static string DATE_INVALID {
+            get {
+                return ResourceManager.GetString("DATE_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description invalid.
+        /// </summary>
+        public static string DESCRIPTION_INVALID {
+            get {
+                return ResourceManager.GetString("DESCRIPTION_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description must be between 3 and 255 characters.
+        /// </summary>
+        public static string DESCRIPTION_INVALID_LENGTH {
+            get {
+                return ResourceManager.GetString("DESCRIPTION_INVALID_LENGTH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name is empty or null.
         /// </summary>
         public static string NAME_EMPTY_OR_NULL {

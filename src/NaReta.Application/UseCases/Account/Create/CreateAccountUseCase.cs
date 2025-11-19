@@ -23,7 +23,7 @@ internal class CreateAccountUseCase : ICreateAccountUseCase
 
     public async Task<OutputAccount> ExecuteAsync(InputCreateAccount input)
     {
-        await Validate(input);
+        await ValidateAsync(input);
 
         var account = new DomainEntity.Account(input.Name);
         await _repository.AddAsync(account);
@@ -35,7 +35,7 @@ internal class CreateAccountUseCase : ICreateAccountUseCase
         };
     }
 
-    private async Task Validate(InputCreateAccount input)
+    private async Task ValidateAsync(InputCreateAccount input)
     {
         var validator = new CreateAccountValidator();
         var result = validator.Validate(input);

@@ -1,6 +1,8 @@
-﻿using NaReta.Application.UseCases.Transaction._Common;
+﻿using NaReta.Application.UseCases.Transaction;
+using NaReta.Application.UseCases.Transaction._Common;
 using NaReta.Application.UseCases.Transaction.Create;
 using NaReta.Common;
+using NaReta.Common.Exceptions;
 using NaReta.Domain.Repositories;
 using NaReta.Domain.Repositories.Accounts;
 using NaReta.Domain.Repositories.Categories;
@@ -32,13 +34,13 @@ internal class CreateTransactionUseCase : ICreateTransactionUseCase
     {
         var account = await _accountRepository.FindByIdAsync(accountId);
         if (account is null)
-            // [TODO] Exceção NotFound
-            throw new Exception(ResourceErrorMessages.CATEGORY_NOT_EXISTS);
+            throw new NotFoundException(ResourceErrorMessages.ACCOUNT_NOT_FOUND);
+
+        await ValidateAsync(input);
 
         var category = await _categoryRepository.FindByIdAsync(input.CategoryId);
         if (category is null)
-            // [TODO] Exceção BadRequest
-            throw new Exception(ResourceErrorMessages.CATEGORY_NOT_EXISTS);
+            throw new NotFoundException(ResourceErrorMessages.CATEGORY_NOT_EXISTS);
 
         var transaction = new DomainEntity.Transaction(account, input.Type, input.Amount, input.Date, category, input.Description);
         await _transactionRepository.AddSync(transaction);
@@ -55,5 +57,21 @@ internal class CreateTransactionUseCase : ICreateTransactionUseCase
             Description = transaction.Description,
             Category = transaction.Category.Name
         };
+    }
+
+    private async Task ValidateAsync(InputCreateTransaction input)
+    {
+        var validator = new TransactionValidator();
+        var result = validator.Validate(input);
+
+        //var category = await _categoryRepository.FindByIdAsync(input.CategoryId);
+        //if (category is null)
+        //    result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.CATEGORY_NOT_FOUND));
+
+        if (!result.IsValid)
+        {
+            var errorMessages = result.Errors.Select(err => err.ErrorMessage).ToList();
+            throw new ErrorOnValidationException(errorMessages);
+        }
     }
 }
