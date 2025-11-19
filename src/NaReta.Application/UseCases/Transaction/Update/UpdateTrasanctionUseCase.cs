@@ -1,5 +1,6 @@
 ﻿using NaReta.Application.UseCases.Transaction._Common;
 using NaReta.Common;
+using NaReta.Common.Exceptions;
 using NaReta.Domain.Repositories;
 using NaReta.Domain.Repositories.Categories;
 using NaReta.Domain.Repositories.Transactions;
@@ -26,13 +27,13 @@ internal class UpdateTrasanctionUseCase : IUpdateTrasanctionUseCase
     {
         var transaction = await _transactionRepository.FindByIdAsync(id);
         if (transaction is null)
-            // [TODO] NotFound
-            throw new Exception(ResourceErrorMessages.CATEGORY_NOT_EXISTS);
+            throw new NotFoundException(ResourceErrorMessages.TRANSACTION_NOT_FOUND);
+
+        Validate(input);
 
         var category = await _categoryRepository.FindByIdAsync(input.CategoryId);
         if (category is null)
-            // [TODO] Exceção BadRequest
-            throw new Exception(ResourceErrorMessages.CATEGORY_NOT_EXISTS);
+            throw new NotFoundException(ResourceErrorMessages.CATEGORY_NOT_FOUND);
 
         transaction.ApplyChanges(input.Type, input.Amount, input.Date, category, input.Description);
 
@@ -50,5 +51,17 @@ internal class UpdateTrasanctionUseCase : IUpdateTrasanctionUseCase
             Description = transaction.Description,
             Category = transaction.Category.Name
         };
+    }
+
+    private void Validate(InputTransaction input)
+    {
+        var validator = new TransactionValidator();
+        var result = validator.Validate(input);
+
+        if (!result.IsValid)
+        {
+            var errorMessages = result.Errors.Select(err => err.ErrorMessage).ToList();
+            throw new ErrorOnValidationException(errorMessages);
+        }
     }
 }

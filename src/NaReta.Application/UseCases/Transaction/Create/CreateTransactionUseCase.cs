@@ -40,7 +40,7 @@ internal class CreateTransactionUseCase : ICreateTransactionUseCase
 
         var category = await _categoryRepository.FindByIdAsync(input.CategoryId);
         if (category is null)
-            throw new NotFoundException(ResourceErrorMessages.CATEGORY_NOT_EXISTS);
+            throw new NotFoundException(ResourceErrorMessages.CATEGORY_NOT_FOUND);
 
         var transaction = new DomainEntity.Transaction(account, input.Type, input.Amount, input.Date, category, input.Description);
         await _transactionRepository.AddSync(transaction);
