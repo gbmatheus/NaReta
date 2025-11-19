@@ -23,9 +23,17 @@ internal class AccountRepository : IAccountReadOnlyRepository, IAccountWriteOnly
         return account != null;
     }
 
-    public async Task<Account?> FindByIdAsync(int id)
+    async Task<Account?> IAccountWriteOnlyRepository.FindByIdAsync(int id)
     {
-        return await _dbContext.accounts.AsNoTracking().FirstOrDefaultAsync(a => a.Id == id);
+        return await _dbContext.accounts.Include(a => a.Transactions).FirstOrDefaultAsync(a => a.Id == id);
+    }
+
+    async Task<Account?> IAccountReadOnlyRepository.FindByIdAsync(int id)
+    {
+        return await _dbContext.accounts.AsNoTracking()
+            .Include(a => a.Transactions)
+            .ThenInclude(t => t.Category)
+            .FirstOrDefaultAsync(a => a.Id == id);
     }
 
     public async Task<List<Account>> ListAsync()

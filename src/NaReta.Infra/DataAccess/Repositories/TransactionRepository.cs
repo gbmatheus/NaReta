@@ -24,8 +24,12 @@ internal class TransactionRepository : ITransactionReadOnlyRepository, ITransact
 
     public async Task<List<Transaction>> ListAsync()
     {
-        // incluir em um commit diferente
         return await _dbContext.transactions.Include(t => t.Category).AsNoTracking().ToListAsync();
+    }
+
+    public async Task<List<Transaction>> ListByAccountIdAsync(int accountId)
+    {
+        return await _dbContext.transactions.Include(t => t.Category).Where(t => t.Account.Id == accountId).AsNoTracking().ToListAsync();
     }
 
     public void Remove(Transaction transaction)
