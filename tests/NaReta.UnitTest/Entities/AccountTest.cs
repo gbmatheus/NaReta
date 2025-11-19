@@ -6,7 +6,7 @@ using NaReta.Domain.Enums;
 using NaReta.Domain.Test.Builder;
 using Shouldly;
 
-namespace NaReta.Domain.Test.Entities;
+namespace NaReta.UnitTest.Entities;
 
 public class AccountTest
 {

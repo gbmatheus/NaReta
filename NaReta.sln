@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 18
-VisualStudioVersion = 18.0.11205.157 d18.0
+VisualStudioVersion = 18.0.11205.157
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
 EndProject
@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{73C08D29
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaReta.Domain", "src\NaReta.Domain\NaReta.Domain.csproj", "{D4129255-5770-43FB-BBEC-68A12CBF3B7D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaReta.Domain.Test", "tests\NaReta.Domain.Test\NaReta.Domain.Test.csproj", "{922AE784-C487-42A9-B7DF-7B45A8C91EC6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaReta.UnitTest", "tests\NaReta.Domain.Test\NaReta.UnitTest.csproj", "{922AE784-C487-42A9-B7DF-7B45A8C91EC6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NaReta.Api", "src\NaReta.Api\NaReta.Api.csproj", "{22F56A3A-DAC2-4736-B1BF-B29C7FD4F198}"
 EndProject

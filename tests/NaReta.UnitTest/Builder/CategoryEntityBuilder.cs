@@ -8,4 +8,9 @@ internal class CategoryEntityBuilder
     {
         return new Faker<Category>().CustomInstantiator(f => new Category(f.Name.JobTitle()));
     }
+
+    public static List<Category> BuildCollection(int size)
+    {
+        return new Faker<Category>().CustomInstantiator(f => new Category(f.Name.JobTitle())).Generate(size);
+    }
 }
