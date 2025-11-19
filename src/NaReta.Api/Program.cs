@@ -1,3 +1,4 @@
+using NaReta.Api.Filters;
 using NaReta.Application;
 using NaReta.Infra;
 
@@ -9,6 +10,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionHandlerFilter)));
 
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure();
