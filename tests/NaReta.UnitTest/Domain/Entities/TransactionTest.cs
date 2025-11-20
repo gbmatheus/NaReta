@@ -71,7 +71,7 @@ public class TransactionTest
         var act = () => new Transaction(account, TYPE, amount, DATE, category, DESCRIPTION);
 
         // Assert
-        act.ShouldThrow<DomainException>(ResourceErrorMessages.AMOUNT_EQUAL_OR_LESS_ZERO);
+        act.ShouldThrow<DomainException>(ResourceErrorMessages.AMOUNT_GREATER_THAN_ZERO);
     }
 
     [Fact(DisplayName = nameof(ChangeType_ValidParameters_ChangedSuccessfully))]
@@ -126,7 +126,7 @@ public class TransactionTest
 
         var act = () => transcation.ChangeAmount(-10m);
 
-        act.ShouldThrow<DomainException>(ResourceErrorMessages.AMOUNT_EQUAL_OR_LESS_ZERO);
+        act.ShouldThrow<DomainException>(ResourceErrorMessages.AMOUNT_GREATER_THAN_ZERO);
     }
 
     [Fact(DisplayName = nameof(ChangeDate_ValidParameters_ChangedSuccessfully))]

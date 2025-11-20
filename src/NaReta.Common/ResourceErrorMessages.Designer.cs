@@ -79,11 +79,11 @@ namespace NaReta.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Amount equal or less than zero.
+        ///   Looks up a localized string similar to Amount must be greater than zero.
         /// </summary>
-        public static string AMOUNT_EQUAL_OR_LESS_ZERO {
+        public static string AMOUNT_GREATER_THAN_ZERO {
             get {
-                return ResourceManager.GetString("AMOUNT_EQUAL_OR_LESS_ZERO", resourceCulture);
+                return ResourceManager.GetString("AMOUNT_GREATER_THAN_ZERO", resourceCulture);
             }
         }
         
@@ -142,7 +142,7 @@ namespace NaReta.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Description must be between 3 and 255 characters.
+        ///   Looks up a localized string similar to Description must be between 3 and 120 characters.
         /// </summary>
         public static string DESCRIPTION_INVALID_LENGTH {
             get {
