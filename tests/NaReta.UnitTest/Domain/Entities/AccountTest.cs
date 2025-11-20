@@ -3,7 +3,7 @@ using NaReta.Common;
 using NaReta.Common.Exceptions;
 using NaReta.Domain.Entities;
 using NaReta.Domain.Enums;
-using NaReta.Domain.Test.Builder;
+using NaReta.UnitTest.Builder.Entity;
 using Shouldly;
 
 namespace NaReta.UnitTest.Domain.Entities;

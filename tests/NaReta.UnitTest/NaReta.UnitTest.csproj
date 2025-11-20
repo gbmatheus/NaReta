@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\NaReta.Application\NaReta.Application.csproj" />
     <ProjectReference Include="..\..\src\NaReta.Domain\NaReta.Domain.csproj" />
   </ItemGroup>
 

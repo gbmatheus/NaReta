@@ -1,6 +1,6 @@
-﻿using Bogus;
-using NaReta.Application.UseCases.Account.Create;
+﻿using NaReta.Application.UseCases.Account.Create;
 using NaReta.Common;
+using NaReta.UnitTest.Builder.Input;
 using Shouldly;
 
 namespace NaReta.UnitTest.Application.Validators;
@@ -14,9 +14,7 @@ public class AccountValidatorTest
     [InlineData(null)]
     public void Validate_WhenNameEmpty_ReturnErrorMessageRequired(string name)
     {
-        var faker = new Faker<InputCreateAccount>()
-            .RuleFor(c => c.Name, f => f.Person.UserName);
-        var input = faker.Generate();
+        var input = InputAccountBuilder.Build();
         input.Name = name;
 
         var validator = new CreateAccountValidator();
@@ -30,9 +28,7 @@ public class AccountValidatorTest
     [Fact(DisplayName = nameof(Validate_ValidParamters_ReturnTrue))]
     public void Validate_ValidParamters_ReturnTrue()
     {
-        var faker = new Faker<InputCreateAccount>()
-            .RuleFor(c => c.Name, f => f.Person.UserName);
-        var input = faker.Generate();
+        var input = InputAccountBuilder.Build();
 
         var validator = new CreateAccountValidator();
         var result = validator.Validate(input);

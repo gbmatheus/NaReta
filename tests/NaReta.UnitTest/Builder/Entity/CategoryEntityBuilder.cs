@@ -1,7 +1,7 @@
 ﻿using Bogus;
 using NaReta.Domain.Entities;
 
-namespace NaReta.Domain.Test.Builder;
+namespace NaReta.UnitTest.Builder.Entity;
 internal class CategoryEntityBuilder
 {
     public static Category Build()

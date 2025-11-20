@@ -2,7 +2,7 @@
 using NaReta.Domain.Entities;
 using NaReta.Domain.Enums;
 
-namespace NaReta.Domain.Test.Builder;
+namespace NaReta.UnitTest.Builder.Entity;
 internal class TransactionEntityBuilder
 {
     public static Transaction Build(Account account, Category category, TransactionType? type = null)
