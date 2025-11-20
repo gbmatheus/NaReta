@@ -5,7 +5,7 @@ using NaReta.Domain.Enums;
 using NaReta.Domain.Test.Builder;
 using Shouldly;
 
-namespace NaReta.UnitTest.Entities;
+namespace NaReta.UnitTest.Domain.Entities;
 
 public class TransactionTest
 {

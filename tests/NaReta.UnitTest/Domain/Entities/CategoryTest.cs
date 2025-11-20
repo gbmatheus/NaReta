@@ -3,7 +3,7 @@ using NaReta.Common.Exceptions;
 using NaReta.Domain.Entities;
 using Shouldly;
 
-namespace NaReta.UnitTest.Entities;
+namespace NaReta.UnitTest.Domain.Entities;
 
 public class CategoryTest
 {
