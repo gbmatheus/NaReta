@@ -13,7 +13,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void Constructor_ValidParameters_CreateTransaction()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         // Arrange
@@ -37,7 +37,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void Constructor_EmptyOrNullType_ThrowDomainException()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         // Arrange
@@ -59,7 +59,7 @@ public class TransactionTest
     [InlineData(-19232)]
     public void Constructor_AmountEqualOrLessThanZero_ThrowDomainException(Decimal amount)
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         // Arrange
@@ -78,7 +78,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void ChangeType_ValidParameters_ChangedSuccessfully()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         TransactionType TYPE = TransactionType.Expense;
@@ -96,7 +96,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void ChangeAmount_ValidParameters_ChangedSuccessfully()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         TransactionType TYPE = TransactionType.Expense;
@@ -114,7 +114,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void ChangeAmount_WhenAmountNegative_ThrowDomainException()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         TransactionType TYPE = TransactionType.Expense;
@@ -133,7 +133,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void ChangeDate_ValidParameters_ChangedSuccessfully()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         TransactionType TYPE = TransactionType.Expense;
@@ -151,7 +151,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void ChangeDescription_ValidParameters_ChangedSuccessfully()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         TransactionType TYPE = TransactionType.Expense;
@@ -169,7 +169,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void ChangeCategory_ValidParameters_ChangedSuccessfully()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         TransactionType TYPE = TransactionType.Expense;
@@ -188,7 +188,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void ApplyChanges_ValidParameter_ChangedAttributeTransaciont()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         TransactionType TYPE = TransactionType.Expense;
@@ -217,7 +217,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void ApplyChanges_WhenTypeInvalid_ThrowDomainException()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         TransactionType TYPE = TransactionType.Expense;
@@ -241,7 +241,7 @@ public class TransactionTest
     [Trait("Domain", "Entity - Transaction")]
     public void ApplyChanges_WhenAmountNegative_ThrowDomainException()
     {
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
         var category = CategoryEntityBuilder.Build();
 
         TransactionType TYPE = TransactionType.Expense;

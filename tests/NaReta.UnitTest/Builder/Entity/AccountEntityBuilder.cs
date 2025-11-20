@@ -2,7 +2,7 @@
 using NaReta.Domain.Entities;
 
 namespace NaReta.UnitTest.Builder.Entity;
-internal class AccountEntityBuildes
+internal class AccountEntityBuilder
 {
     public static Account Build()
     {

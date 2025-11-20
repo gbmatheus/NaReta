@@ -46,7 +46,7 @@ public class AccountTest
     public void CalculateBalance_WhenTransactionIncome_ReturnsBalancePositive()
     {
         var category = CategoryEntityBuilder.Build();
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
 
         var faker = new Faker();
         TransactionType TYPE = TransactionType.Income;
@@ -65,7 +65,7 @@ public class AccountTest
     public void CalculateBalance_WhenTransactionExpense_ReturnsBalanceNegative()
     {
         var category = CategoryEntityBuilder.Build();
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
 
         var faker = new Faker();
         TransactionType TYPE = TransactionType.Expense;
@@ -84,7 +84,7 @@ public class AccountTest
     public void CalculateBalance_WhenTransactionIncomeGreaterThanExpense_ReturnsBalancePositive()
     {
         var category = CategoryEntityBuilder.Build();
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
 
         var faker = new Faker();
         DateTime date = faker.Date.Past();
@@ -103,7 +103,7 @@ public class AccountTest
     public void AddTransaction_ValidParamter_RetursList()
     {
         var category = CategoryEntityBuilder.Build();
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
 
         var transactionFaker = new Faker<Transaction>()
             .CustomInstantiator(f => new Transaction(
@@ -127,7 +127,7 @@ public class AccountTest
     public void AddTransaction_ValidParamter_ReturnsResultBalance()
     {
         var category = CategoryEntityBuilder.Build();
-        var account = AccountEntityBuildes.Build();
+        var account = AccountEntityBuilder.Build();
 
         var transactionFaker = new Faker<Transaction>()
             .CustomInstantiator(f => new Transaction(

@@ -12,7 +12,7 @@ using DomainEntity = NaReta.Domain.Entities;
 
 namespace NaReta.Application.UseCases.Transactions.Create;
 
-internal class CreateTransactionUseCase : ICreateTransactionUseCase
+public class CreateTransactionUseCase : ICreateTransactionUseCase
 {
     private readonly IAccountWriteOnlyRepository _accountRepository;
     private readonly ITransactionWriteOnlyRepository _transactionRepository;
