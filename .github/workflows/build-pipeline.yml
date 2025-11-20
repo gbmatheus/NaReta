@@ -5,9 +5,9 @@ name: Build & Run Tests
 
 on:
   push:
-    branches: [ "delevop" ]
+    branches: [ "develop" ]
   pull_request:
-    branches: [ "delevop" ]
+    branches: [ "develop" ]
 
 jobs:
   build:
