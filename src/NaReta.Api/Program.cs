@@ -1,6 +1,7 @@
 using NaReta.Api.Filters;
 using NaReta.Application;
 using NaReta.Infra;
+using NaReta.Infra.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,4 +32,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+await Migrate();
+
 app.Run();
+
+async Task Migrate()
+{
+    await using var scope = app.Services.CreateAsyncScope();
+    await DatabaseMigrations.MigrateDatabase(scope.ServiceProvider);
+}
