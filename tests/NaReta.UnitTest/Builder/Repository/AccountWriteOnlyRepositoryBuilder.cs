@@ -19,6 +19,18 @@ internal class AccountWriteOnlyRepositoryBuilder
         return this;
     }
 
+    public AccountWriteOnlyRepositoryBuilder ExistsByNameAsync(string name)
+    {
+        mock.Setup(config => config.ExistsByNameAsync(name)).ReturnsAsync(true);
+        return this;
+    }
+
+    public AccountWriteOnlyRepositoryBuilder ExistsByEmailAsync(string email)
+    {
+        mock.Setup(config => config.ExistsByEmailAsync(email)).ReturnsAsync(true);
+        return this;
+    }
+
     public IAccountWriteOnlyRepository Build()
     {
         return mock.Object;

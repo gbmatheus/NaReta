@@ -8,41 +8,63 @@ using Shouldly;
 
 namespace NaReta.UnitTest.Domain.Entities;
 
+[Trait("Domain", "Entity - Account")]
 public class AccountTest
 {
     [Fact(DisplayName = nameof(Contructor_ValidParameters_CreateAccount))]
-    [Trait("Domain", "Entity - Account")]
     public void Contructor_ValidParameters_CreateAccount()
     {
         var faker = new Faker();
         var name = faker.Person.FirstName;
-
+        var email = faker.Person.Email;
+        
         var account = new Account(
-            name
+            name,
+            email
         );
 
         account.ShouldNotBeNull();
         account.Name.ShouldBe(name);
+        account.Email.ShouldBe(email);
         account.Balance.ShouldBe(0);
         account.Transactions.ShouldBeEmpty();
     }
 
     [Theory(DisplayName = nameof(Contructor_WhenNameEmptyOrNull_ThrowDomainException))]
-    [Trait("Domain", "Entity - Account")]
     [InlineData("")]
     [InlineData("      ")]
     [InlineData(null)]
     public void Contructor_WhenNameEmptyOrNull_ThrowDomainException(string name)
     {
+        var faker = new Faker();
+        var email = faker.Person.Email;
+
         var act = () => new Account(
-            name
+            name,
+            email
         );
 
         act.ShouldThrow<DomainException>(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
     }
 
+    [Theory(DisplayName = nameof(Contructor_WhenEmailEmptyOrNull_ThrowDomainException))]
+    [InlineData("")]
+    [InlineData("      ")]
+    [InlineData(null)]
+    public void Contructor_WhenEmailEmptyOrNull_ThrowDomainException(string email)
+    {
+        var faker = new Faker();
+        var name = faker.Person.FirstName;
+
+        var act = () => new Account(
+            name,
+            email
+        );
+
+        act.ShouldThrow<DomainException>(ResourceErrorMessages.EMAIL_EMPTY_OR_NULL);
+    }
+
     [Fact(DisplayName = nameof(CalculateBalance_WhenTransactionIncome_ReturnsBalancePositive))]
-    [Trait("Domain", "Entity - Account")]
     public void CalculateBalance_WhenTransactionIncome_ReturnsBalancePositive()
     {
         var category = CategoryEntityBuilder.Build();
@@ -61,7 +83,6 @@ public class AccountTest
     }
 
     [Fact(DisplayName = nameof(CalculateBalance_WhenTransactionExpense_ReturnsBalanceNegative))]
-    [Trait("Domain", "Entity - Account")]
     public void CalculateBalance_WhenTransactionExpense_ReturnsBalanceNegative()
     {
         var category = CategoryEntityBuilder.Build();
@@ -80,7 +101,6 @@ public class AccountTest
     }
 
     [Fact(DisplayName = nameof(CalculateBalance_WhenTransactionIncomeGreaterThanExpense_ReturnsBalancePositive))]
-    [Trait("Domain", "Entity - Account")]
     public void CalculateBalance_WhenTransactionIncomeGreaterThanExpense_ReturnsBalancePositive()
     {
         var category = CategoryEntityBuilder.Build();
@@ -99,7 +119,6 @@ public class AccountTest
     }
 
     [Fact(DisplayName = nameof(AddTransaction_ValidParamter_RetursList))]
-    [Trait("Domain", "Entity - Account")]
     public void AddTransaction_ValidParamter_RetursList()
     {
         var category = CategoryEntityBuilder.Build();
@@ -123,7 +142,6 @@ public class AccountTest
     }
 
     [Fact(DisplayName = nameof(AddTransaction_ValidParamter_ReturnsResultBalance))]
-    [Trait("Domain", "Entity - Account")]
     public void AddTransaction_ValidParamter_ReturnsResultBalance()
     {
         var category = CategoryEntityBuilder.Build();

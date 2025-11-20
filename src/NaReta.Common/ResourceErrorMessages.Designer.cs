@@ -151,6 +151,42 @@ namespace NaReta.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Email is empty or null.
+        /// </summary>
+        public static string EMAIL_EMPTY_OR_NULL {
+            get {
+                return ResourceManager.GetString("EMAIL_EMPTY_OR_NULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is already in use.
+        /// </summary>
+        public static string EMAIL_IN_USE {
+            get {
+                return ResourceManager.GetString("EMAIL_IN_USE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is invalid.
+        /// </summary>
+        public static string EMAIL_INVALID {
+            get {
+                return ResourceManager.GetString("EMAIL_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Email is required.
+        /// </summary>
+        public static string EMAIL_REQUIRED {
+            get {
+                return ResourceManager.GetString("EMAIL_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name is empty or null.
         /// </summary>
         public static string NAME_EMPTY_OR_NULL {

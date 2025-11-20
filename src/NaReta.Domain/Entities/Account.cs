@@ -8,6 +8,7 @@ public class Account
 {
     public int Id { get; private set; }
     public string Name { get; private set; }
+    public string Email { get; private set; }
     public decimal Balance { get; private set; }
     public List<Transaction> Transactions { get; private set; } = new List<Transaction>();
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;
@@ -15,13 +16,17 @@ public class Account
 
     public Account() { }
 
-    public Account(string name, List<Transaction>? transactions = default)
+    public Account(string name, string? email = null)
     {
         if (string.IsNullOrWhiteSpace(name))
             throw new DomainException(ResourceErrorMessages.NAME_EMPTY_OR_NULL);
-        Name = name;
+        if (string.IsNullOrWhiteSpace(email))
+            throw new DomainException(ResourceErrorMessages.EMAIL_EMPTY_OR_NULL);
 
-        Transactions = transactions ?? new List<Transaction>();
+        Name = name;
+        Email = email;
+
+        //Transactions = transactions ?? new List<Transaction>();
         CalculateBalance();
     }
 

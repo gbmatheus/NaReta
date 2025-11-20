@@ -6,6 +6,10 @@ internal class AccountEntityBuilder
 {
     public static Account Build()
     {
-        return new Faker<Account>().CustomInstantiator(f => new Account(f.Person.FirstName));
+        return new Faker<Account>().CustomInstantiator(
+            f => new Account(
+                f.Person.FirstName,
+                f.Person.Email
+            ));
     }
 }
