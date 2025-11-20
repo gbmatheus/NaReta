@@ -76,7 +76,7 @@ namespace NaReta.Domain.Entities
                 throw new DomainException(ResourceErrorMessages.TYPE_INVALID);
 
             if (Amount <= 0)
-                throw new DomainException(ResourceErrorMessages.AMOUNT_EQUAL_OR_LESS_ZERO);
+                throw new DomainException(ResourceErrorMessages.AMOUNT_GREATER_THAN_ZERO);
         }
     }
 }
