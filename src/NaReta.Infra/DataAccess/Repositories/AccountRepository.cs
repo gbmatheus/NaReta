@@ -23,6 +23,12 @@ internal class AccountRepository : IAccountReadOnlyRepository, IAccountWriteOnly
         return account != null;
     }
 
+    public async Task<bool> ExistsByEmailAsync(string email)
+    {
+        var account = await _dbContext.accounts.FirstOrDefaultAsync(a => a.Email == email);
+        return account != null;
+    }
+
     async Task<Account?> IAccountWriteOnlyRepository.FindByIdAsync(int id)
     {
         return await _dbContext.accounts.Include(a => a.Transactions).FirstOrDefaultAsync(a => a.Id == id);

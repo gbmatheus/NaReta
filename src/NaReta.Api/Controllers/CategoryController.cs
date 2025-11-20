@@ -33,7 +33,7 @@ public class CategoryController : ControllerBase
         return Ok(response);
     }
 
-    [HttpPost]
+    [HttpPut]
     [ProducesResponseType(typeof(OutputCategory), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ResponseErrorDTO), StatusCodes.Status404NotFound)]
     [ProducesResponseType(typeof(ResponseErrorDTO), StatusCodes.Status400BadRequest)]
