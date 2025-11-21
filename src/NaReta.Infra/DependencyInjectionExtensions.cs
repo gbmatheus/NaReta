@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using NaReta.Domain.Repositories;
 using NaReta.Domain.Repositories.Accounts;
@@ -8,11 +9,12 @@ using NaReta.Infra.DataAccess;
 using NaReta.Infra.DataAccess.Repositories;
 
 namespace NaReta.Infra;
+
 public static class DependencyInjectionExtensions
 {
-    public static void AddInfrastructure(this IServiceCollection services)
+    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        AddDbContext(services);
+        AddDbContext(services, configuration);
         AddRepository(services);
     }
 
@@ -27,12 +29,10 @@ public static class DependencyInjectionExtensions
         services.AddScoped<IAccountWriteOnlyRepository, AccountRepository>();
     }
 
-    private static void AddDbContext(IServiceCollection services)
+    private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
     {
-        var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
-        string DbPath = Path.Join(path, "NaReta.db");
+        var connection = configuration.GetConnectionString("Connection");
 
-        services.AddDbContext<NaRetaDBContext>(config => config.UseSqlite($"Data Source={DbPath}"));
+        services.AddDbContext<NaRetaDBContext>(config => config.UseSqlite(connection));
     }
 }
