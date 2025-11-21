@@ -16,13 +16,13 @@ internal class TransactionReadOnlyRepositoryBuilder
 
     public TransactionReadOnlyRepositoryBuilder ListByAccountIdAsync(List<Transaction> transactions)
     {
-        mock.Setup(config => config.ListByAccountIdAsync(It.IsAny<int>(), null, null)).ReturnsAsync(transactions);
+        mock.Setup(config => config.ListByAccountIdAsync(It.IsAny<int>(), null, null, It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(transactions);
         return this;
     }
 
     public TransactionReadOnlyRepositoryBuilder ListByAccountIdWithDateAsync(InputListTransaction input, List<Transaction> transactions)
     {
-        mock.Setup(config => config.ListByAccountIdAsync(It.IsAny<int>(), input.StartDate, input.EndDate))
+        mock.Setup(config => config.ListByAccountIdAsync(It.IsAny<int>(), input.StartDate, input.EndDate, It.IsAny<int>(), It.IsAny<int>()))
             .ReturnsAsync(() =>
             {
                 var result = transactions.Where(t => t.Date >= input.StartDate && t.Date <= input.EndDate).ToList();

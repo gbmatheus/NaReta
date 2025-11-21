@@ -31,7 +31,9 @@ internal class TransactionRepository : ITransactionReadOnlyRepository, ITransact
     public async Task<List<Transaction>> ListByAccountIdAsync(
         int accountId,
         DateTime? startDate = null,
-        DateTime? endDate = null)
+        DateTime? endDate = null,
+        int pageNumber = 1,
+        int itemPerPage = 10)
     {
         var query = _dbContext.transactions.Include(t => t.Category).Where(t => t.Account.Id == accountId).AsQueryable();
 
@@ -40,7 +42,9 @@ internal class TransactionRepository : ITransactionReadOnlyRepository, ITransact
         if (endDate != null)
             query = query.Where(t => t.Date <= endDate);
 
-        return await query.AsNoTracking().ToListAsync();
+        query = query.Skip((pageNumber - 1) * itemPerPage).Take(itemPerPage);
+
+        return await query.OrderBy(t => t.Date).AsNoTracking().ToListAsync();
     }
 
     public void Remove(Transaction transaction)
