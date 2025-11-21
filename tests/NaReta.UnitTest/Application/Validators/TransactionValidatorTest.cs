@@ -7,7 +7,7 @@ using Shouldly;
 
 namespace NaReta.UnitTest.Application.Validators;
 
-[Trait("Application", "Validator - Category")]
+[Trait("Application", "Validator - Trasaction")]
 public class TransactionValidatorTest
 {
     [Fact(DisplayName = nameof(Validate_WhenAmountLessThanOrEqualToZero_ReturnErroMessageGreaterThanZero))]

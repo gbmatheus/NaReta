@@ -28,12 +28,14 @@ public class TransactionController : ControllerBase
     }
 
     [HttpGet]
+    [ProducesResponseType(typeof(List<OutputTransaction>), statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> List(
-        [FromQuery] int accountId,
+        [FromQuery] InputListTransaction filterQuery,
         [FromServices] IListTransactionUseCase useCase
     )
     {
-        var response = await useCase.ExecuteAsync(accountId);
+        var response = await useCase.ExecuteAsync(filterQuery);
 
         if (!response.Any())
             return NoContent();
@@ -43,7 +45,8 @@ public class TransactionController : ControllerBase
 
     [HttpPut("{id}")]
     [ProducesResponseType(typeof(OutputAccount), statusCode: StatusCodes.Status200OK)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ResponseErrorDTO), statusCode: StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ResponseErrorDTO), statusCode: StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Update(
         [FromBody] InputTransaction request,
         [FromRoute] int id,
@@ -55,9 +58,8 @@ public class TransactionController : ControllerBase
     }
 
     [HttpDelete("{id}")]
-    [ProducesResponseType(typeof(OutputAccount), statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ResponseErrorDTO), statusCode: StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ResponseErrorDTO), statusCode: StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete(
         [FromRoute] int id,
         [FromServices] IDeleteTransactionUseCase useCase)

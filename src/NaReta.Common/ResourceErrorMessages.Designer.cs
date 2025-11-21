@@ -187,6 +187,15 @@ namespace NaReta.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End date must be greater than or equal to start date.
+        /// </summary>
+        public static string END_DATA_GREATER_THAN_START_DATE {
+            get {
+                return ResourceManager.GetString("END_DATA_GREATER_THAN_START_DATE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name is empty or null.
         /// </summary>
         public static string NAME_EMPTY_OR_NULL {
@@ -201,6 +210,15 @@ namespace NaReta.Common {
         public static string NAME_REQUIRED {
             get {
                 return ResourceManager.GetString("NAME_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start date must be less than or equal to end date.
+        /// </summary>
+        public static string START_DATE_LESS_THAN_END_DATE {
+            get {
+                return ResourceManager.GetString("START_DATE_LESS_THAN_END_DATE", resourceCulture);
             }
         }
         

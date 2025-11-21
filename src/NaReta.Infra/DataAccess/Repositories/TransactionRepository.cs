@@ -3,6 +3,7 @@ using NaReta.Domain.Entities;
 using NaReta.Domain.Repositories.Transactions;
 
 namespace NaReta.Infra.DataAccess.Repositories;
+
 internal class TransactionRepository : ITransactionReadOnlyRepository, ITransactionWriteOnlyRepository
 {
     private readonly NaRetaDBContext _dbContext;
@@ -27,9 +28,19 @@ internal class TransactionRepository : ITransactionReadOnlyRepository, ITransact
         return await _dbContext.transactions.Include(t => t.Category).AsNoTracking().ToListAsync();
     }
 
-    public async Task<List<Transaction>> ListByAccountIdAsync(int accountId)
+    public async Task<List<Transaction>> ListByAccountIdAsync(
+        int accountId,
+        DateTime? startDate = null,
+        DateTime? endDate = null)
     {
-        return await _dbContext.transactions.Include(t => t.Category).Where(t => t.Account.Id == accountId).AsNoTracking().ToListAsync();
+        var query = _dbContext.transactions.Include(t => t.Category).Where(t => t.Account.Id == accountId).AsQueryable();
+
+        if (startDate != null)
+            query = query.Where(t => t.Date >= startDate);
+        if (endDate != null)
+            query = query.Where(t => t.Date <= endDate);
+
+        return await query.AsNoTracking().ToListAsync();
     }
 
     public void Remove(Transaction transaction)

@@ -177,4 +177,10 @@
   <data name="EMAIL_IN_USE" xml:space="preserve">
     <value>Email is already in use</value>
   </data>
+  <data name="END_DATA_GREATER_THAN_START_DATE" xml:space="preserve">
+    <value>End date must be greater than or equal to start date</value>
+  </data>
+  <data name="START_DATE_LESS_THAN_END_DATE" xml:space="preserve">
+    <value>Start date must be less than or equal to end date</value>
+  </data>
 </root>

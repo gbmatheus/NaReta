@@ -14,7 +14,7 @@ using NaReta.UnitTest.Builder.Repository;
 using Shouldly;
 using DomainEntity = NaReta.Domain.Entities;
 
-namespace NaReta.UnitTest.Application.UseCases.Account;
+namespace NaReta.UnitTest.Application.UseCases.Transaction;
 
 [Trait("Application", "Transaction - UseCase")]
 public class CreateTransactionUseCaseTest

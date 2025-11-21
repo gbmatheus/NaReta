@@ -26,7 +26,6 @@ public class Account
         Name = name;
         Email = email;
 
-        //Transactions = transactions ?? new List<Transaction>();
         CalculateBalance();
     }
 
