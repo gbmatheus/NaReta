@@ -1,6 +1,7 @@
 using NaReta.Api.Filters;
 using NaReta.Application;
 using NaReta.Infra;
+using NaReta.Infra.Configuration;
 using NaReta.Infra.Migrations;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddMvc(options => options.Filters.Add(typeof(ExceptionHandlerFilter)));
 
 builder.Services.AddApplication();
-builder.Services.AddInfrastructure(builder.Configuration);
+builder.Services.AddInfrastructure();
+
+builder.Services.AddOptions<DatabaseSettings>()
+    .Bind(builder.Configuration.GetSection(DatabaseSettings.SECTION_NAME))
+    .ValidateDataAnnotations()
+    .ValidateOnStart();
+builder.Services.AddSingleton<DatabaseSettings>();
 
 var app = builder.Build();
 
