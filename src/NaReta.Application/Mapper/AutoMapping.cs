@@ -16,11 +16,8 @@ public class AutoMapping : Profile
     private void EntityToOutput()
     {
         CreateMap<Account, OutputAccount>();
-        CreateMap<Account, OutputShortAccount>();
         CreateMap<Category, OutputCategory>();
         CreateMap<Transaction, OutputTransaction>()
-            .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name));
-        CreateMap<Transaction, OutputTransactionIntoAccount>()
             .ForMember(dest => dest.Category, opt => opt.MapFrom(src => src.Category.Name));
     }
 }
