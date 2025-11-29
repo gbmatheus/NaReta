@@ -1,0 +1,12 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/NaReta.Api/NaReta.Api.csproj" />
+    <Project Path="src/NaReta.Application/NaReta.Application.csproj" />
+    <Project Path="src/NaReta.Common/NaReta.Common.csproj" />
+    <Project Path="src/NaReta.Domain/NaReta.Domain.csproj" />
+    <Project Path="src/NaReta.Infra/NaReta.Infra.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/NaReta.UnitTest/NaReta.UnitTest.csproj" />
+  </Folder>
+</Solution>
