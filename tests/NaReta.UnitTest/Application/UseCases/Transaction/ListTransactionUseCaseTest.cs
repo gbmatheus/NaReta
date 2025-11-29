@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Bogus;
-using NaReta.Application.UseCases.Transaction._Common;
 using NaReta.Application.UseCases.Transaction.List;
 using NaReta.Domain.Repositories.Transactions;
 using NaReta.UnitTest.Builder.Entity;

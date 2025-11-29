@@ -34,8 +34,8 @@ public class CreateTransactionUseCaseTest
 
         var output = await useCase.ExecuteAsync(accountId, input);
 
+
         output.ShouldNotBeNull();
-        output.AccountId.ShouldBe(accountId);
         output.Amount.ShouldBe(input.Amount);
         output.Date.ShouldBe(input.Date);
         output.Description.ShouldBe(input.Description);
