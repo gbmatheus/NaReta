@@ -22,7 +22,7 @@ public class AccountController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(List<OutputShortAccount>), statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(List<OutputAccount>), statusCode: StatusCodes.Status200OK)]
     [ProducesResponseType(statusCode: StatusCodes.Status204NoContent)]
     public async Task<IActionResult> List([FromServices] IListAccountUseCase useCase)
     {

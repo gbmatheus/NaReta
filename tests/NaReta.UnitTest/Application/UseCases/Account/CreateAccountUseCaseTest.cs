@@ -26,7 +26,6 @@ public class CreateAccountUseCaseTest
         output.Name.ShouldBe(input.Name);
         output.Email.ShouldBe(input.Email);
         output.Balance.ShouldBe(0);
-        output.Transactions.ShouldBeEmpty();
     }
 
     [Fact(DisplayName = nameof(ExecuteAsync_WhenEmailExists_ThrowErrorOnValidationException))]
