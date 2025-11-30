@@ -105,6 +105,33 @@ public class ListTransactionUseCaseTest
         output.ShouldHaveSingleItem();
     }
 
+    [Theory(DisplayName = nameof(ExecuteAsync_WhenTransactionsExistsInRangeDate_ReturnsTransactions))]
+    [InlineData(10)]
+    [InlineData(20)]
+    [InlineData(50)]
+    [InlineData(100)]
+    [InlineData(200)]
+    public async Task ExecuteAsync_WhenItemPerPage_ReturnsTransactions(int itemPerPage)
+    {
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        int accountId = AccountEntityBuilder.Build().Id;
+
+        var input = new InputListTransaction
+        {
+            AccountId = accountId,
+            ItemPerPage = itemPerPage
+        };
+
+        var transactions = TransactionEntityBuilder.Build(account, category, itemPerPage);
+
+        var useCase = CreateUseCase(transactions, input);
+
+        var output = await useCase.ExecuteAsync(input);
+
+        output.Count.ShouldBe(itemPerPage);
+    }
+
     private static IListTransactionUseCase CreateUseCase(List<DomainEntity.Transaction>? transactions = null, InputListTransaction? input = null)
     {
         TransactionReadOnlyRepositoryBuilder transactionRepositoryBuilder = new TransactionReadOnlyRepositoryBuilder();

@@ -18,7 +18,14 @@ public class ListTransactionUseCase : IListTransactionUseCase
 
     public async Task<List<OutputTransaction>> ExecuteAsync(InputListTransaction input)
     {
-        var transactions = await _repository.ListByAccountIdAsync(input.AccountId, input.StartDate, input.EndDate);
+        Validate(input);
+
+        var transactions = await _repository.ListByAccountIdAsync(
+            input.AccountId,
+            input.StartDate,
+            input.EndDate,
+            input.PageNumber,
+            input.ItemPerPage);
 
         return _mapper.Map<List<OutputTransaction>>(transactions);
     }
