@@ -196,6 +196,15 @@ namespace NaReta.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Page item limit exceeded. Maximum limit of 200 items per page.
+        /// </summary>
+        public static string ITEM_PER_PAGE_EXCEEDED {
+            get {
+                return ResourceManager.GetString("ITEM_PER_PAGE_EXCEEDED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Name is empty or null.
         /// </summary>
         public static string NAME_EMPTY_OR_NULL {
@@ -210,6 +219,15 @@ namespace NaReta.Common {
         public static string NAME_REQUIRED {
             get {
                 return ResourceManager.GetString("NAME_REQUIRED", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Page number must be greater than zero.
+        /// </summary>
+        public static string PAGE_NUMBER_GREATER_THAN_ZERO {
+            get {
+                return ResourceManager.GetString("PAGE_NUMBER_GREATER_THAN_ZERO", resourceCulture);
             }
         }
         

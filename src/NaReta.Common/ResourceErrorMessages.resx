@@ -183,4 +183,10 @@
   <data name="START_DATE_LESS_THAN_END_DATE" xml:space="preserve">
     <value>Start date must be less than or equal to end date</value>
   </data>
+  <data name="PAGE_NUMBER_GREATER_THAN_ZERO" xml:space="preserve">
+    <value>Page number must be greater than zero</value>
+  </data>
+  <data name="ITEM_PER_PAGE_EXCEEDED" xml:space="preserve">
+    <value>Page item limit exceeded. Maximum limit of 200 items per page</value>
+  </data>
 </root>

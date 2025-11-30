@@ -22,12 +22,16 @@ internal class TransactionReadOnlyRepositoryBuilder
 
     public TransactionReadOnlyRepositoryBuilder ListByAccountIdWithDateAsync(InputListTransaction input, List<Transaction> transactions)
     {
-        mock.Setup(config => config.ListByAccountIdAsync(It.IsAny<int>(), input.StartDate, input.EndDate, It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(() =>
-            {
-                var result = transactions.Where(t => t.Date >= input.StartDate && t.Date <= input.EndDate).ToList();
-                return transactions.Where(t => t.Date >= input.StartDate && t.Date <= input.EndDate).ToList();
-            });
+        var query = transactions.AsQueryable();
+        if (input.StartDate != null && input.EndDate != null)
+            query = query.Where(t => t.Date >= input.StartDate && t.Date <= input.EndDate);
+
+        var result = query.Take(input.ItemPerPage).ToList();
+        
+        mock.Setup(config => config.ListByAccountIdAsync(
+            It.IsAny<int>(),
+            input.StartDate, input.EndDate, It.IsAny<int>(), It.IsAny<int>()))
+            .ReturnsAsync(result);
         return this;
     }
 

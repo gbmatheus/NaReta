@@ -7,8 +7,8 @@ namespace NaReta.Domain.Entities;
 public class Account
 {
     public int Id { get; private set; }
-    public string Name { get; private set; }
-    public string Email { get; private set; }
+    public string Name { get; private set; } = string.Empty;
+    public string Email { get; private set; } = string.Empty;
     public decimal Balance { get; private set; }
     public List<Transaction> Transactions { get; private set; } = new List<Transaction>();
     public DateTime CreatedAt { get; private set; } = DateTime.UtcNow;

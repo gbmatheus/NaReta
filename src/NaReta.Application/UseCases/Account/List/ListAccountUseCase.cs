@@ -15,11 +15,11 @@ internal class ListAccountUseCase : IListAccountUseCase
         _mapper = mapper;
     }
 
-    public async Task<List<OutputShortAccount>> ExecuteAsync()
+    public async Task<List<OutputAccount>> ExecuteAsync()
     {
         var account = await _repository.ListAsync();
 
-        return _mapper.Map<List<OutputShortAccount>>(account);
+        return _mapper.Map<List<OutputAccount>>(account);
 
     }
 }

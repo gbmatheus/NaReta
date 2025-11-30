@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Bogus;
-using NaReta.Application.UseCases.Transaction._Common;
 using NaReta.Application.UseCases.Transaction.List;
 using NaReta.Domain.Repositories.Transactions;
 using NaReta.UnitTest.Builder.Entity;
@@ -104,6 +103,33 @@ public class ListTransactionUseCaseTest
         var output = await useCase.ExecuteAsync(input);
 
         output.ShouldHaveSingleItem();
+    }
+
+    [Theory(DisplayName = nameof(ExecuteAsync_WhenTransactionsExistsInRangeDate_ReturnsTransactions))]
+    [InlineData(10)]
+    [InlineData(20)]
+    [InlineData(50)]
+    [InlineData(100)]
+    [InlineData(200)]
+    public async Task ExecuteAsync_WhenItemPerPage_ReturnsTransactions(int itemPerPage)
+    {
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        int accountId = AccountEntityBuilder.Build().Id;
+
+        var input = new InputListTransaction
+        {
+            AccountId = accountId,
+            ItemPerPage = itemPerPage
+        };
+
+        var transactions = TransactionEntityBuilder.Build(account, category, itemPerPage);
+
+        var useCase = CreateUseCase(transactions, input);
+
+        var output = await useCase.ExecuteAsync(input);
+
+        output.Count.ShouldBe(itemPerPage);
     }
 
     private static IListTransactionUseCase CreateUseCase(List<DomainEntity.Transaction>? transactions = null, InputListTransaction? input = null)
