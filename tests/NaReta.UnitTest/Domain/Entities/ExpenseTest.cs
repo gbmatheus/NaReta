@@ -4,7 +4,6 @@ using NaReta.Domain.Entities;
 using NaReta.Domain.Enums;
 using NaReta.UnitTest.Builder.Entity;
 using Shouldly;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NaReta.UnitTest.Domain.Entities;
 
@@ -21,7 +20,11 @@ public class ExpenseTest
         var expenseType = faker.PickRandom<ExpenseType>();
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
 
-        var expense = new Expense(method, type, installmentNumber, expenseType, responsible);
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var expense = new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
         expense.ShouldNotBeNull();
         expense.PaymentMethod.ShouldBe(method);
@@ -29,19 +32,24 @@ public class ExpenseTest
         expense.InstallmentNumber.ShouldBe(installmentNumber);
         expense.ExpenseType.ShouldBe(expenseType);
         expense.Responsibles.ShouldHaveSingleItem();
+        expense.Transaction.ShouldBe(transaction);
     }
 
     [Fact]
     public void Contructor_WhenPaymentMethodInvalid_ThrowDomainException()
     {
         var faker = new Faker();
-        var method = (PaymentMethod) int.MaxValue;
+        var method = (PaymentMethod)int.MaxValue;
         var type = faker.PickRandom<PaymentType>();
         var installmentNumber = faker.Random.Number(1);
         var expenseType = faker.PickRandom<ExpenseType>();
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
 
-        var act = () => new Expense(method, type, installmentNumber, expenseType, responsible);
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
         act.ShouldThrow<DomainException>("Payment method invalid");
     }
@@ -56,7 +64,11 @@ public class ExpenseTest
         var expenseType = faker.PickRandom<ExpenseType>();
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
 
-        var act = () => new Expense(method, type, installmentNumber, expenseType, responsible);
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
         act.ShouldThrow<DomainException>("Payment type invalid");
     }
@@ -71,7 +83,11 @@ public class ExpenseTest
         var expenseType = (ExpenseType)int.MaxValue;
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
 
-        var act = () => new Expense(method, type, installmentNumber, expenseType, responsible);
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
         act.ShouldThrow<DomainException>("Expense type invalid");
     }
@@ -86,7 +102,11 @@ public class ExpenseTest
         var expenseType = faker.PickRandom<ExpenseType>();
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
 
-        var act = () => new Expense(method, type, installmentNumber, expenseType, responsible);
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
         act.ShouldThrow<DomainException>("The payment method full is a single installment and cannot be divided into more installments");
     }
@@ -102,11 +122,34 @@ public class ExpenseTest
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
         var newResponsible = new List<Account> { AccountEntityBuilder.Build() };
 
-        var expense = new Expense(method, type, installmentNumber, expenseType, responsible);
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var expense = new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
         expense.AssignResponsibles(newResponsible);
 
         expense.Responsibles.ShouldHaveSingleItem();
         expense.Responsibles.ShouldBe(newResponsible);
+    }
+
+    [Fact]
+    public void Contructor_WhenTransactionTypeIncome_ThrowDomainException()
+    {
+        var faker = new Faker();
+        var method = faker.PickRandom<PaymentMethod>();
+        var type = PaymentType.Full;
+        var installmentNumber = faker.Random.Number(2, 10);
+        var expenseType = faker.PickRandom<ExpenseType>();
+        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Income);
+
+        var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
+
+        act.ShouldThrow<DomainException>("Transaction is not of type expense");
     }
 }

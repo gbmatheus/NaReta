@@ -10,13 +10,15 @@ public class Expense
     public int InstallmentNumber { get; private set; }
     public ExpenseType ExpenseType { get; private set; }
     public List<Account> Responsibles { get; private set; }
+    public Transaction Transaction { get; private set; }
 
     public Expense(
         PaymentMethod paymentMethod,
         PaymentType paymentType,
         int installmentNumber,
         ExpenseType expenseType,
-        List<Account> responsible
+        List<Account> responsible,
+        Transaction transaction
         )
     {
         if (!Enum.IsDefined(typeof(PaymentMethod), paymentMethod))
@@ -36,6 +38,7 @@ public class Expense
         InstallmentNumber = installmentNumber;
         ExpenseType = expenseType;
         Responsibles = responsible;
+        Transaction = transaction;
     }
 
     public void AssignResponsibles (List<Account> responsibles)
