@@ -189,4 +189,22 @@
   <data name="ITEM_PER_PAGE_EXCEEDED" xml:space="preserve">
     <value>Page item limit exceeded. Maximum limit of 200 items per page</value>
   </data>
+  <data name="PAYMENT_METHOD_INVALID" xml:space="preserve">
+    <value>Payment method invalid</value>
+  </data>
+  <data name="PAYMENT_TYPE_INVALID" xml:space="preserve">
+    <value>Payment type invalid</value>
+  </data>
+  <data name="EXPENSE_TYPE_INVALID" xml:space="preserve">
+    <value>Expense type invalid</value>
+  </data>
+  <data name="PAYMENT_METHOD_FULL_SINGLE" xml:space="preserve">
+    <value>Payment method full is a single installment and cannot be divided into more installments</value>
+  </data>
+  <data name="INSTALLMENT_NUMBER_LESS_ONE" xml:space="preserve">
+    <value>Installment number cannot be less than one</value>
+  </data>
+  <data name="TRANSACTION_NOT_EXPENSE" xml:space="preserve">
+    <value>Transaction is not of type expense</value>
+  </data>
 </root>
