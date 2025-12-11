@@ -27,6 +27,9 @@ public class Expense
         if (!Enum.IsDefined(typeof(PaymentType), paymentType))
             throw new DomainException("Payment type invalid");
 
+        if (installmentNumber <= 0)
+            throw new DomainException("Installment number cannot be less than one");
+
         if (!Enum.IsDefined(typeof(ExpenseType), expenseType))
             throw new DomainException("Expense type invalid");
 

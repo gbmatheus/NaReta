@@ -16,7 +16,7 @@ public class ExpenseTest
         var faker = new Faker();
         var method = faker.PickRandom<PaymentMethod>();
         var type = faker.PickRandom<PaymentType>();
-        var installmentNumber = faker.Random.Number(1);
+        var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
 
@@ -41,7 +41,7 @@ public class ExpenseTest
         var faker = new Faker();
         var method = (PaymentMethod)int.MaxValue;
         var type = faker.PickRandom<PaymentType>();
-        var installmentNumber = faker.Random.Number(1);
+        var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
 
@@ -60,7 +60,7 @@ public class ExpenseTest
         var faker = new Faker();
         var method = faker.PickRandom<PaymentMethod>();
         var type = (PaymentType)int.MaxValue;
-        var installmentNumber = faker.Random.Number(1);
+        var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
 
@@ -79,7 +79,7 @@ public class ExpenseTest
         var faker = new Faker();
         var method = faker.PickRandom<PaymentMethod>();
         var type = faker.PickRandom<PaymentType>();
-        var installmentNumber = faker.Random.Number(1);
+        var installmentNumber = 1;
         var expenseType = (ExpenseType)int.MaxValue;
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
 
@@ -112,12 +112,31 @@ public class ExpenseTest
     }
 
     [Fact]
+    public void Contructor_WhenInstallmentNumberLessThanOne_ThrowDomainException()
+    {
+        var faker = new Faker();
+        var method = faker.PickRandom<PaymentMethod>();
+        var type = PaymentType.Installments;
+        var installmentNumber = 0;
+        var expenseType = faker.PickRandom<ExpenseType>();
+        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
+
+        act.ShouldThrow<DomainException>("Installment number cannot be less than one");
+    }
+
+    [Fact]
     public void AssignResponsibles_NewResposability_ChangeResponsability()
     {
         var faker = new Faker();
         var method = faker.PickRandom<PaymentMethod>();
         var type = faker.PickRandom<PaymentType>();
-        var installmentNumber = faker.Random.Number(1);
+        var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
         var responsible = new List<Account> { AccountEntityBuilder.Build() };
         var newResponsible = new List<Account> { AccountEntityBuilder.Build() };
