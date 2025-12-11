@@ -171,4 +171,88 @@ public class ExpenseTest
 
         act.ShouldThrow<DomainException>("Transaction is not of type expense");
     }
+
+    [Fact]
+    public void CalculateAmount_WhenIsFull_ReturnsTransacionAmount()
+    {
+        var faker = new Faker();
+        var method = faker.PickRandom<PaymentMethod>();
+        var type = PaymentType.Full;
+        var installmentNumber = 1;
+        var expenseType = faker.PickRandom<ExpenseType>();
+        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var expense = new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
+
+        var amount = expense.CalculateAmount();
+
+        amount.ShouldBe(transaction.Amount);
+    }
+
+    [Fact]
+    public void CalculateAmount_WhenIsFullAndHasTwoResposible_ReturnsTransacionSplit()
+    {
+        var faker = new Faker();
+        var method = faker.PickRandom<PaymentMethod>();
+        var type = PaymentType.Full;
+        var installmentNumber = 1;
+        var expenseType = faker.PickRandom<ExpenseType>();
+        var responsible = new List<Account> { AccountEntityBuilder.Build(), AccountEntityBuilder.Build() };
+
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var expense = new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
+
+        var amount = expense.CalculateAmount();
+
+        amount.ShouldBe(transaction.Amount / responsible.Count);
+    }
+
+    [Fact]
+    public void CalculateAmount_WhenNoResposible_ReturnsTransacionAmount()
+    {
+        var faker = new Faker();
+        var method = faker.PickRandom<PaymentMethod>();
+        var type = PaymentType.Full;
+        var installmentNumber = 1;
+        var expenseType = faker.PickRandom<ExpenseType>();
+        var responsible = new List<Account> { };
+
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var expense = new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
+
+        var amount = expense.CalculateAmount();
+
+        amount.ShouldBe(transaction.Amount);
+    }
+
+    [Fact]
+    public void CalculateAmount_WhenIsInstallments_ReturnsTransacionAmountSplit()
+    {
+        var faker = new Faker();
+        var method = faker.PickRandom<PaymentMethod>();
+        var type = PaymentType.Installments;
+        var installmentNumber = faker.Random.Number(2, 4);
+        var expenseType = faker.PickRandom<ExpenseType>();
+        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+
+        var category = CategoryEntityBuilder.Build();
+        var account = AccountEntityBuilder.Build();
+        var transaction = TransactionEntityBuilder.Build(account, category, TransactionType.Expense);
+
+        var expense = new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
+
+        var amount = expense.CalculateAmount();
+
+        amount.ShouldBe(transaction.Amount / installmentNumber);
+    }
 }

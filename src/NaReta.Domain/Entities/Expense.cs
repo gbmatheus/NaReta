@@ -44,8 +44,16 @@ public class Expense
         Transaction = transaction;
     }
 
-    public void AssignResponsibles (List<Account> responsibles)
+    public void AssignResponsibles(List<Account> responsibles)
     {
         Responsibles = responsibles;
+    }
+
+    public decimal CalculateAmount()
+    {
+        decimal amount = Transaction.Amount / InstallmentNumber;
+        if (Responsibles.Count != 0)
+            amount = amount / Responsibles.Count;
+        return amount;
     }
 }
