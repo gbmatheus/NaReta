@@ -1,4 +1,5 @@
 ﻿using Bogus;
+using NaReta.Common;
 using NaReta.Common.Exceptions;
 using NaReta.Domain.Entities;
 using NaReta.Domain.Enums;
@@ -51,7 +52,7 @@ public class ExpenseTest
 
         var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
-        act.ShouldThrow<DomainException>("Payment method invalid");
+        act.ShouldThrow<DomainException>(ResourceErrorMessages.PAYMENT_METHOD_INVALID);
     }
 
     [Fact]
@@ -70,7 +71,7 @@ public class ExpenseTest
 
         var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
-        act.ShouldThrow<DomainException>("Payment type invalid");
+        act.ShouldThrow<DomainException>(ResourceErrorMessages.PAYMENT_TYPE_INVALID);
     }
 
     [Fact]
@@ -89,7 +90,7 @@ public class ExpenseTest
 
         var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
-        act.ShouldThrow<DomainException>("Expense type invalid");
+        act.ShouldThrow<DomainException>(ResourceErrorMessages.EXPENSE_TYPE_INVALID);
     }
 
     [Fact]
@@ -108,7 +109,7 @@ public class ExpenseTest
 
         var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
-        act.ShouldThrow<DomainException>("The payment method full is a single installment and cannot be divided into more installments");
+        act.ShouldThrow<DomainException>(ResourceErrorMessages.PAYMENT_METHOD_FULL_SINGLE);
     }
 
     [Fact]
@@ -127,7 +128,7 @@ public class ExpenseTest
 
         var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
-        act.ShouldThrow<DomainException>("Installment number cannot be less than one");
+        act.ShouldThrow<DomainException>(ResourceErrorMessages.INSTALLMENT_NUMBER_LESS_ONE);
     }
 
     [Fact]
@@ -169,7 +170,7 @@ public class ExpenseTest
 
         var act = () => new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
-        act.ShouldThrow<DomainException>("Transaction is not of type expense");
+        act.ShouldThrow<DomainException>(ResourceErrorMessages.TRANSACTION_NOT_EXPENSE);
     }
 
     [Fact]

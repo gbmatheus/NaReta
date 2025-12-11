@@ -1,4 +1,5 @@
-﻿using NaReta.Common.Exceptions;
+﻿using NaReta.Common;
+using NaReta.Common.Exceptions;
 using NaReta.Domain.Enums;
 
 namespace NaReta.Domain.Entities;
@@ -21,27 +22,14 @@ public class Expense
         Transaction transaction
         )
     {
-        if (!Enum.IsDefined(typeof(PaymentMethod), paymentMethod))
-            throw new DomainException("Payment method invalid");
-
-        if (!Enum.IsDefined(typeof(PaymentType), paymentType))
-            throw new DomainException("Payment type invalid");
-
-        if (installmentNumber <= 0)
-            throw new DomainException("Installment number cannot be less than one");
-
-        if (!Enum.IsDefined(typeof(ExpenseType), expenseType))
-            throw new DomainException("Expense type invalid");
-
-        if (PaymentType.Full.Equals(paymentType) && installmentNumber > 1)
-            throw new DomainException("The payment method full is a single installment and cannot be divided into more installments");
-
         PaymentMethod = paymentMethod;
         PaymentType = paymentType;
         InstallmentNumber = installmentNumber;
         ExpenseType = expenseType;
         Responsibles = responsible;
         Transaction = transaction;
+
+        Validate();
     }
 
     public void AssignResponsibles(List<Account> responsibles)
@@ -55,5 +43,23 @@ public class Expense
         if (Responsibles.Count != 0)
             amount = amount / Responsibles.Count;
         return amount;
+    }
+
+    private void Validate()
+    {
+        if (!Enum.IsDefined(typeof(PaymentMethod), PaymentMethod))
+            throw new DomainException(ResourceErrorMessages.PAYMENT_METHOD_INVALID);
+
+        if (!Enum.IsDefined(typeof(PaymentType), PaymentType))
+            throw new DomainException(ResourceErrorMessages.PAYMENT_TYPE_INVALID);
+
+        if (InstallmentNumber <= 0)
+            throw new DomainException(ResourceErrorMessages.INSTALLMENT_NUMBER_LESS_ONE);
+
+        if (!Enum.IsDefined(typeof(ExpenseType), ExpenseType))
+            throw new DomainException(ResourceErrorMessages.EXPENSE_TYPE_INVALID);
+
+        if (PaymentType.Full.Equals(PaymentType) && InstallmentNumber > 1)
+            throw new DomainException(ResourceErrorMessages.PAYMENT_METHOD_FULL_SINGLE);
     }
 }
