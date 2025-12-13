@@ -174,7 +174,7 @@ public class ExpenseTest
     }
 
     [Fact]
-    public void CalculateAmount_WhenIsFull_ReturnsTransacionAmount()
+    public void CalculateAmountPerResponsible_WhenIsFull_ReturnsTransacionAmount()
     {
         var faker = new Faker();
         var method = faker.PickRandom<PaymentMethod>();
@@ -189,13 +189,13 @@ public class ExpenseTest
 
         var expense = new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
-        var amount = expense.CalculateAmount();
+        var amount = expense.CalculateAmountPerResponsible();
 
         amount.ShouldBe(transaction.Amount);
     }
 
     [Fact]
-    public void CalculateAmount_WhenIsFullAndHasTwoResposible_ReturnsTransacionSplit()
+    public void CalculateAmountPerResponsible_WhenIsFullAndHasTwoResposible_ReturnsTransacionSplit()
     {
         var faker = new Faker();
         var method = faker.PickRandom<PaymentMethod>();
@@ -210,13 +210,13 @@ public class ExpenseTest
 
         var expense = new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
-        var amount = expense.CalculateAmount();
+        var amount = expense.CalculateAmountPerResponsible();
 
         amount.ShouldBe(transaction.Amount / responsible.Count);
     }
 
     [Fact]
-    public void CalculateAmount_WhenNoResposible_ReturnsTransacionAmount()
+    public void CalculateAmountPerResponsible_WhenNoResposible_ReturnsTransacionAmount()
     {
         var faker = new Faker();
         var method = faker.PickRandom<PaymentMethod>();
@@ -231,13 +231,13 @@ public class ExpenseTest
 
         var expense = new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
-        var amount = expense.CalculateAmount();
+        var amount = expense.CalculateAmountPerResponsible();
 
         amount.ShouldBe(transaction.Amount);
     }
 
     [Fact]
-    public void CalculateAmount_WhenIsInstallments_ReturnsTransacionAmountSplit()
+    public void CalculateAmountPerResponsible_WhenIsInstallments_ReturnsTransacionAmount()
     {
         var faker = new Faker();
         var method = faker.PickRandom<PaymentMethod>();
@@ -252,8 +252,8 @@ public class ExpenseTest
 
         var expense = new Expense(method, type, installmentNumber, expenseType, responsible, transaction);
 
-        var amount = expense.CalculateAmount();
+        var amount = expense.CalculateAmountPerResponsible();
 
-        amount.ShouldBe(transaction.Amount / installmentNumber);
+        amount.ShouldBe(transaction.Amount);
     }
 }

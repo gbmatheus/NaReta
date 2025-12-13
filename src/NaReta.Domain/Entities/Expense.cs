@@ -37,12 +37,11 @@ public class Expense
         Responsibles = responsibles;
     }
 
-    public decimal CalculateAmount()
+    public decimal CalculateAmountPerResponsible()
     {
-        decimal amount = Transaction.Amount / InstallmentNumber;
         if (Responsibles.Count != 0)
-            amount = amount / Responsibles.Count;
-        return amount;
+            return Transaction.Amount / Responsibles.Count;
+        return Transaction.Amount;
     }
 
     private void Validate()
