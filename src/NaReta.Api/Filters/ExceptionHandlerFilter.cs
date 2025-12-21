@@ -8,12 +8,23 @@ namespace NaReta.Api.Filters;
 
 public class ExceptionHandlerFilter : IExceptionFilter
 {
+    private readonly ILogger<ExceptionHandlerFilter> _logger;
+
+    public ExceptionHandlerFilter(ILogger<ExceptionHandlerFilter> logger)
+    {
+        _logger = logger;
+    }
+
     public void OnException(ExceptionContext context)
     {
         if (context.Exception is NaRetaExceptionBase)
             HandlerProjectException(context);
         else
+        {
+            string exception = $"Message: {context.Exception.Message}; StackTrace: {context.Exception.StackTrace}";
+            _logger.LogError(exception + context.Exception.ToString());
             ThrowUnknowError(context);
+        }
     }
 
     private void HandlerProjectException(ExceptionContext context)
