@@ -5,6 +5,7 @@ using NaReta.Domain.Entities;
 using NaReta.Domain.Enums;
 using NaReta.UnitTest.Builder.Entity;
 using Shouldly;
+using System.Drawing;
 
 namespace NaReta.UnitTest.Domain.Entities;
 
@@ -19,7 +20,7 @@ public class ExpenseTest
         var type = faker.PickRandom<PaymentType>();
         var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName() };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -44,7 +45,7 @@ public class ExpenseTest
         var type = faker.PickRandom<PaymentType>();
         var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName(), new Faker().Name.FirstName() };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -63,7 +64,8 @@ public class ExpenseTest
         var type = (PaymentType)int.MaxValue;
         var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName(), new Faker().Name.FirstName() };
+
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -82,7 +84,7 @@ public class ExpenseTest
         var type = faker.PickRandom<PaymentType>();
         var installmentNumber = 1;
         var expenseType = (ExpenseType)int.MaxValue;
-        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName(), new Faker().Name.FirstName() };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -101,7 +103,7 @@ public class ExpenseTest
         var type = PaymentType.Full;
         var installmentNumber = faker.Random.Number(2, 10);
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName(), new Faker().Name.FirstName() };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -120,7 +122,7 @@ public class ExpenseTest
         var type = PaymentType.Installments;
         var installmentNumber = 0;
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName(), new Faker().Name.FirstName() };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -139,8 +141,8 @@ public class ExpenseTest
         var type = faker.PickRandom<PaymentType>();
         var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { AccountEntityBuilder.Build() };
-        var newResponsible = new List<Account> { AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName(), new Faker().Name.FirstName() };
+        var newResponsible = new List<string> { new Faker().Name.FirstName() };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -162,7 +164,7 @@ public class ExpenseTest
         var type = PaymentType.Full;
         var installmentNumber = faker.Random.Number(2, 10);
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName(), new Faker().Name.FirstName() };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -181,7 +183,7 @@ public class ExpenseTest
         var type = PaymentType.Full;
         var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName() };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -202,7 +204,7 @@ public class ExpenseTest
         var type = PaymentType.Full;
         var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { AccountEntityBuilder.Build(), AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName(), new Faker().Name.FirstName() };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -223,7 +225,7 @@ public class ExpenseTest
         var type = PaymentType.Full;
         var installmentNumber = 1;
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { };
+        var responsible = new List<string> { };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();
@@ -244,7 +246,7 @@ public class ExpenseTest
         var type = PaymentType.Installments;
         var installmentNumber = faker.Random.Number(2, 4);
         var expenseType = faker.PickRandom<ExpenseType>();
-        var responsible = new List<Account> { AccountEntityBuilder.Build() };
+        var responsible = new List<string> { new Faker().Name.FirstName() };
 
         var category = CategoryEntityBuilder.Build();
         var account = AccountEntityBuilder.Build();

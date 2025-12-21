@@ -6,19 +6,24 @@ namespace NaReta.Domain.Entities;
 
 public class Expense
 {
+    public int Id { get; private set; }
     public PaymentMethod PaymentMethod { get; private set; }
     public PaymentType PaymentType { get; private set; }
     public int InstallmentNumber { get; private set; }
     public ExpenseType ExpenseType { get; private set; }
-    public List<Account> Responsibles { get; private set; }
+    public List<string> Responsibles { get; private set; }
     public Transaction Transaction { get; private set; }
+
+    public Expense()
+    {
+    }
 
     public Expense(
         PaymentMethod paymentMethod,
         PaymentType paymentType,
         int installmentNumber,
         ExpenseType expenseType,
-        List<Account> responsible,
+        List<string> responsible,
         Transaction transaction
         )
     {
@@ -32,7 +37,7 @@ public class Expense
         Validate();
     }
 
-    public void AssignResponsibles(List<Account> responsibles)
+    public void AssignResponsibles(List<string> responsibles)
     {
         Responsibles = responsibles;
     }
