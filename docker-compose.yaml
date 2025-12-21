@@ -1,0 +1,30 @@
+
+services:
+  database:
+    container_name: db_nareta
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    volumes:
+      - ./docker/mssql-data:/var/opt/mssql/data
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=Senha!23
+      - MSSQL_PID=Express
+    ports:
+      - "1433:1433"
+    networks:
+      - api_network
+    tty: true
+    restart: always
+  
+  backend:
+    container_name: api_nareta
+    build: .
+    depends_on:
+      - database
+    ports:
+      - "8080:8080"
+
+
+networks:
+  api_network:
+    driver: bridge
