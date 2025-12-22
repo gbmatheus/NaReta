@@ -113,16 +113,15 @@ public class CreateTransactionUseCaseTest
         ICategoryWriteOnlyRepository categoryRepository = categoryRepositoryBuilder.Build();
 
         ITransactionWriteOnlyRepository transactionRepository = TransactionWriteOnlyRepositoryBuilder.Build();
-        IUnitOfWork unitOfWork = IUnitOfWorkBuilder.Build();
+        IUnitOfWork unitOfWork = IUnitOfWorkBuilder.Build(
+            accountRepository,
+            categoryRepository,
+            transactionRepository);
         IMapper mapper = MapperBuilder.Build();
 
         var useCase = new CreateTransactionUseCase(
-            accountRepository,
-            transactionRepository,
-            categoryRepository,
             unitOfWork,
-            mapper
-            );
+            mapper);
 
         return useCase;
     }

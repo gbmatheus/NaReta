@@ -15,7 +15,7 @@ internal class AccountWriteOnlyRepositoryBuilder
 
     public AccountWriteOnlyRepositoryBuilder FindByIdAsync(Account account)
     {
-        mock.Setup(config => config.FindByIdAsync(It.IsAny<int>())).ReturnsAsync(account);
+        mock.Setup(config => config.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(account);
         return this;
     }
 

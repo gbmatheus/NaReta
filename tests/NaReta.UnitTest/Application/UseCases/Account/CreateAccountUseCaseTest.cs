@@ -78,11 +78,11 @@ public class CreateAccountUseCaseTest
             accountRepositoryBuilder.ExistsByEmailAsync(email);
         IAccountWriteOnlyRepository accountRepository = accountRepositoryBuilder.Build();
 
-        IUnitOfWork unitOfWork = IUnitOfWorkBuilder.Build();
+        IUnitOfWork unitOfWork = IUnitOfWorkBuilder.Build(accountRepository);
+
         IMapper mapper = MapperBuilder.Build();
 
         var useCase = new CreateAccountUseCase(
-            accountRepository,
             unitOfWork,
             mapper
             );

@@ -10,13 +10,11 @@ namespace NaReta.Application.UseCases.Category.Create;
 
 internal class CreateCategoryUseCase : ICreateCategoryUseCase
 {
-    private readonly ICategoryWriteOnlyRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CreateCategoryUseCase(ICategoryWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateCategoryUseCase(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
@@ -26,8 +24,8 @@ internal class CreateCategoryUseCase : ICreateCategoryUseCase
         await ValidateAsync(input);
 
         var category = new DomainEntity.Category(input.Name);
-        await _repository.AddAsync(category);
-        await _unitOfWork.Commit();
+        await _unitOfWork.CategoryWriteOnlyRepository.AddAsync(category);
+        await _unitOfWork.CommitAsync();
 
         return _mapper.Map<OutputCategory>(category);
     }
@@ -37,7 +35,7 @@ internal class CreateCategoryUseCase : ICreateCategoryUseCase
         var validator = new CategoryValidator();
         var result = validator.Validate(input);
 
-        var categoryExists = await _repository.ExistsByNameAsync(input.Name);
+        var categoryExists = await _unitOfWork.CategoryWriteOnlyRepository.ExistsByNameAsync(input.Name);
         if (categoryExists)
             result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, ResourceErrorMessages.CATEGORY_NAME_EXISTS));
 

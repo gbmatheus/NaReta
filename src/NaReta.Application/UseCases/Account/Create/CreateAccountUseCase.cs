@@ -11,13 +11,11 @@ namespace NaReta.Application.UseCases.Account.Create;
 
 public class CreateAccountUseCase : ICreateAccountUseCase
 {
-    private readonly IAccountWriteOnlyRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CreateAccountUseCase(IAccountWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateAccountUseCase(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
@@ -27,8 +25,8 @@ public class CreateAccountUseCase : ICreateAccountUseCase
         await ValidateAsync(input);
 
         var account = new DomainEntity.Account(input.Name, input.Email);
-        await _repository.AddAsync(account);
-        await _unitOfWork.Commit();
+        await _unitOfWork.AccountWriteOnlyRepository.AddAsync(account);
+        await _unitOfWork.CommitAsync();
 
         return _mapper.Map<OutputAccount>(account);
     }
@@ -38,7 +36,7 @@ public class CreateAccountUseCase : ICreateAccountUseCase
         var validator = new CreateAccountValidator();
         var result = validator.Validate(input);
 
-        var accountExists = await _repository.ExistsByEmailAsync(input.Email);
+        var accountExists = await _unitOfWork.AccountWriteOnlyRepository.ExistsByEmailAsync(input.Email);
 
         if (accountExists)
             result.Errors.Add(new ValidationFailure(string.Empty, ResourceErrorMessages.EMAIL_IN_USE));

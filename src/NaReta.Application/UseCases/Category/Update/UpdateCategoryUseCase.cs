@@ -10,13 +10,11 @@ namespace NaReta.Application.UseCases.Category.Update;
 
 internal class UpdateCategoryUseCase : IUpdateCategoryUseCase
 {
-    private readonly ICategoryWriteOnlyRepository _repository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public UpdateCategoryUseCase(ICategoryWriteOnlyRepository repository, IUnitOfWork unitOfWork, IMapper mapper)
+    public UpdateCategoryUseCase(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _repository = repository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
@@ -25,14 +23,14 @@ internal class UpdateCategoryUseCase : IUpdateCategoryUseCase
     {
         await ValidateAsync(input);
 
-        var category = await _repository.FindByIdAsync(id);
+        var category = await _unitOfWork.CategoryWriteOnlyRepository.GetByIdAsync(id);
         if (category is null)
             throw new NotFoundException(ResourceErrorMessages.CATEGORY_NOT_FOUND);
 
         category.ChangeName(input.Name);
 
-        _repository.Update(category);
-        await _unitOfWork.Commit();
+        _unitOfWork.CategoryWriteOnlyRepository.Update(category);
+        await _unitOfWork.CommitAsync();
 
         return _mapper.Map<OutputCategory>(category);
     }
@@ -42,7 +40,7 @@ internal class UpdateCategoryUseCase : IUpdateCategoryUseCase
         var validator = new CategoryValidator();
         var result = validator.Validate(input);
 
-        var categoryExists = await _repository.ExistsByNameAsync(input.Name);
+        var categoryExists = await _unitOfWork.CategoryWriteOnlyRepository.ExistsByNameAsync(input.Name);
         if (categoryExists)
             result.Errors.Add(new FluentValidation.Results.ValidationFailure(string.Empty, ResourceErrorMessages.CATEGORY_NAME_EXISTS));
 
