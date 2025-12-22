@@ -12,9 +12,9 @@ namespace NaReta.Infra;
 
 public static class DependencyInjectionExtensions
 {
-    public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static void AddInfrastructure(this IServiceCollection services)
     {
-        AddDbContext(services, configuration);
+        AddDbContext(services);
         AddRepository(services);
     }
 
@@ -29,10 +29,8 @@ public static class DependencyInjectionExtensions
         services.AddScoped<IAccountWriteOnlyRepository, AccountRepository>();
     }
 
-    private static void AddDbContext(IServiceCollection services, IConfiguration configuration)
+    private static void AddDbContext(IServiceCollection services)
     {
-        var connection = configuration.GetConnectionString("Connection");
-
-        services.AddDbContext<NaRetaDBContext>(config => config.UseSqlite(connection));
+        services.AddDbContext<NaRetaDBContext>();
     }
 }
