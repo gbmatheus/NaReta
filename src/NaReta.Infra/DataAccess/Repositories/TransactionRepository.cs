@@ -4,28 +4,13 @@ using NaReta.Domain.Repositories.Transactions;
 
 namespace NaReta.Infra.DataAccess.Repositories;
 
-internal class TransactionRepository : ITransactionReadOnlyRepository, ITransactionWriteOnlyRepository
+internal class TransactionRepository : BaseRepository<Transaction>, ITransactionReadOnlyRepository, ITransactionWriteOnlyRepository
 {
-    private readonly NaRetaDBContext _dbContext;
-
-    public TransactionRepository(NaRetaDBContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
-    public async Task AddSync(Transaction transaction)
-    {
-        await _dbContext.transactions.AddAsync(transaction);
-    }
-
-    public async Task<Transaction?> FindByIdAsync(int id)
-    {
-        return await _dbContext.transactions.FindAsync(id);
-    }
+    public TransactionRepository(NaRetaDBContext dbContext) : base(dbContext) { }
 
     public async Task<List<Transaction>> ListAsync()
     {
-        return await _dbContext.transactions.Include(t => t.Category).AsNoTracking().ToListAsync();
+        return await GetAll().Include(t => t.Category).AsNoTracking().ToListAsync();
     }
 
     public async Task<List<Transaction>> ListByAccountIdAsync(
@@ -35,7 +20,7 @@ internal class TransactionRepository : ITransactionReadOnlyRepository, ITransact
         int pageNumber = 1,
         int itemPerPage = 10)
     {
-        var query = _dbContext.transactions.Include(t => t.Category).Where(t => t.Account.Id == accountId).AsQueryable();
+        var query = GetAll().Include(t => t.Category).Where(t => t.Account.Id == accountId);
 
         if (startDate != null)
             query = query.Where(t => t.Date >= startDate);
@@ -47,13 +32,4 @@ internal class TransactionRepository : ITransactionReadOnlyRepository, ITransact
         return await query.OrderBy(t => t.Date).AsNoTracking().ToListAsync();
     }
 
-    public void Remove(Transaction transaction)
-    {
-        _dbContext.transactions.Remove(transaction);
-    }
-
-    public void Update(Transaction transaction)
-    {
-        _dbContext.transactions.Update(transaction);
-    }
 }

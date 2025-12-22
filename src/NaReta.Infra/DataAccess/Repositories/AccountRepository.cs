@@ -3,35 +3,21 @@ using NaReta.Domain.Entities;
 using NaReta.Domain.Repositories.Accounts;
 
 namespace NaReta.Infra.DataAccess.Repositories;
-internal class AccountRepository : IAccountReadOnlyRepository, IAccountWriteOnlyRepository
+
+internal class AccountRepository : BaseRepository<Account>, IAccountReadOnlyRepository, IAccountWriteOnlyRepository
 {
-    private readonly NaRetaDBContext _dbContext;
-
-    public AccountRepository(NaRetaDBContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
-    public async Task AddAsync(Account account)
-    {
-        await _dbContext.accounts.AddAsync(account);
-    }
+    public AccountRepository(NaRetaDBContext dbContext) : base(dbContext) { }
 
     public async Task<bool> ExistsByNameAsync(string name)
     {
-        var account = await _dbContext.accounts.FirstOrDefaultAsync(a => a.Name == name);
+        var account = await GetAsync(a => a.Name == name);
         return account != null;
     }
 
     public async Task<bool> ExistsByEmailAsync(string email)
     {
-        var account = await _dbContext.accounts.FirstOrDefaultAsync(a => a.Email == email);
+        var account = await GetAsync(a => a.Email == email);
         return account != null;
-    }
-
-    async Task<Account?> IAccountWriteOnlyRepository.FindByIdAsync(int id)
-    {
-        return await _dbContext.accounts.Include(a => a.Transactions).FirstOrDefaultAsync(a => a.Id == id);
     }
 
     async Task<Account?> IAccountReadOnlyRepository.FindByIdAsync(int id)
@@ -44,6 +30,6 @@ internal class AccountRepository : IAccountReadOnlyRepository, IAccountWriteOnly
 
     public async Task<List<Account>> ListAsync()
     {
-        return await _dbContext.accounts.AsNoTracking().ToListAsync();
+        return await GetAll().AsNoTracking().ToListAsync();
     }
 }
