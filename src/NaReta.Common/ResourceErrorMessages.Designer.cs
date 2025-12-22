@@ -196,6 +196,24 @@ namespace NaReta.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Expense type invalid.
+        /// </summary>
+        public static string EXPENSE_TYPE_INVALID {
+            get {
+                return ResourceManager.GetString("EXPENSE_TYPE_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Installment number cannot be less than one.
+        /// </summary>
+        public static string INSTALLMENT_NUMBER_LESS_ONE {
+            get {
+                return ResourceManager.GetString("INSTALLMENT_NUMBER_LESS_ONE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Page item limit exceeded. Maximum limit of 200 items per page.
         /// </summary>
         public static string ITEM_PER_PAGE_EXCEEDED {
@@ -232,6 +250,33 @@ namespace NaReta.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment method full is a single installment and cannot be divided into more installments.
+        /// </summary>
+        public static string PAYMENT_METHOD_FULL_SINGLE {
+            get {
+                return ResourceManager.GetString("PAYMENT_METHOD_FULL_SINGLE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment method invalid.
+        /// </summary>
+        public static string PAYMENT_METHOD_INVALID {
+            get {
+                return ResourceManager.GetString("PAYMENT_METHOD_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment type invalid.
+        /// </summary>
+        public static string PAYMENT_TYPE_INVALID {
+            get {
+                return ResourceManager.GetString("PAYMENT_TYPE_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Start date must be less than or equal to end date.
         /// </summary>
         public static string START_DATE_LESS_THAN_END_DATE {
@@ -246,6 +291,15 @@ namespace NaReta.Common {
         public static string TITLE_EMPTY_OR_NULL {
             get {
                 return ResourceManager.GetString("TITLE_EMPTY_OR_NULL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transaction is not of type expense.
+        /// </summary>
+        public static string TRANSACTION_NOT_EXPENSE {
+            get {
+                return ResourceManager.GetString("TRANSACTION_NOT_EXPENSE", resourceCulture);
             }
         }
         
