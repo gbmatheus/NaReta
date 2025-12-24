@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using NaReta.Domain.Entities;
 using NaReta.Domain.Repositories.Transactions;
+using NaReta.Domain.ValueObjects;
 
 namespace NaReta.Infra.DataAccess.Repositories;
 
@@ -32,4 +33,18 @@ internal class TransactionRepository : BaseRepository<Transaction>, ITransaction
         return await query.OrderBy(t => t.Date).AsNoTracking().ToListAsync();
     }
 
+    public async Task<PagedResult<Transaction>> ListByTransactionFilterAsync(TransactionFilter filter)
+    {
+        var query = GetAll();
+        if (filter.AccountId > 0)
+            query = query.Where(t => t.Account.Id == filter.AccountId);
+        if (filter.StartDate != null)
+            query = query.Where(t => t.Date >= filter.StartDate);
+        if (filter.EndDate != null)
+            query = query.Where(t => t.Date <= filter.EndDate);
+
+        var count = await query.CountAsync();
+        var items = await query.Include(t => t.Category).OrderBy(t => t.Id).Skip(filter.PageSize * (filter.PageNumber - 1)).Take(filter.PageSize).ToListAsync();
+        return new PagedResult<Transaction>(items, count, filter.PageNumber, filter.PageSize);
+    }
 }

@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
+using NaReta.Application.DTO;
 using NaReta.Application.UseCases.Transaction._Common;
 using NaReta.Common.Exceptions;
 using NaReta.Domain.Repositories.Transactions;
+using NaReta.Domain.ValueObjects;
 
 namespace NaReta.Application.UseCases.Transaction.List;
 
@@ -16,18 +18,14 @@ public class ListTransactionUseCase : IListTransactionUseCase
         _mapper = mapper;
     }
 
-    public async Task<List<OutputTransaction>> ExecuteAsync(InputListTransaction input)
+    public async Task<PaginationOutput<OutputTransaction>> ExecuteAsync(InputListTransaction input)
     {
         Validate(input);
+        var filter = _mapper.Map<TransactionFilter>(input);
 
-        var transactions = await _repository.ListByAccountIdAsync(
-            input.AccountId,
-            input.StartDate,
-            input.EndDate,
-            input.PageNumber,
-            input.ItemPerPage);
+        var transactions = await _repository.ListByTransactionFilterAsync(filter);
 
-        return _mapper.Map<List<OutputTransaction>>(transactions);
+        return _mapper.Map<PaginationOutput<OutputTransaction>>(transactions);
     }
 
     public void Validate(InputListTransaction input)
