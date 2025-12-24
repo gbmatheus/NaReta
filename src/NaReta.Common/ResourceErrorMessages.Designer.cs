@@ -61,6 +61,15 @@ namespace NaReta.Common {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Account invalid.
+        /// </summary>
+        public static string ACCOUNT_INVALID {
+            get {
+                return ResourceManager.GetString("ACCOUNT_INVALID", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Account name already in use.
         /// </summary>
         public static string ACCOUNT_NAME_IN_USE {
