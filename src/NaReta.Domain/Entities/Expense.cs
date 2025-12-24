@@ -11,7 +11,7 @@ public class Expense
     public PaymentType PaymentType { get; private set; }
     public int InstallmentNumber { get; private set; }
     public ExpenseType ExpenseType { get; private set; }
-    public List<string> Responsibles { get; private set; }
+    public List<string> Responsibles { get; private set; } = [];
     public Transaction Transaction { get; private set; }
 
     public Expense()

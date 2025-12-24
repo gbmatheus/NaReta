@@ -34,7 +34,6 @@ public class CreateTransactionUseCaseTest
 
         var output = await useCase.ExecuteAsync(accountId, input);
 
-
         output.ShouldNotBeNull();
         output.Amount.ShouldBe(input.Amount);
         output.Date.ShouldBe(input.Date);
@@ -109,20 +108,25 @@ public class CreateTransactionUseCaseTest
 
         CategoryWriteOnlyRepositoryBuilder categoryRepositoryBuilder = new CategoryWriteOnlyRepositoryBuilder();
         if (category != null)
+        {
             categoryRepositoryBuilder.FindByIdAsync(category);
+            categoryRepositoryBuilder.GetByIdAsync(category);
+        }
+
         ICategoryWriteOnlyRepository categoryRepository = categoryRepositoryBuilder.Build();
 
         ITransactionWriteOnlyRepository transactionRepository = TransactionWriteOnlyRepositoryBuilder.Build();
-        IUnitOfWork unitOfWork = IUnitOfWorkBuilder.Build();
+        UnitOfWorkBuilder unitOfWorkBuilder = new UnitOfWorkBuilder();
+        unitOfWorkBuilder.SetupAccountRepository(accountRepository);
+        unitOfWorkBuilder.SetupCategoryRepository(categoryRepository);
+        unitOfWorkBuilder.SetupTransactionRepository(transactionRepository);
+        IUnitOfWork unitOfWork = unitOfWorkBuilder.Build();
+
         IMapper mapper = MapperBuilder.Build();
 
         var useCase = new CreateTransactionUseCase(
-            accountRepository,
-            transactionRepository,
-            categoryRepository,
             unitOfWork,
-            mapper
-            );
+            mapper);
 
         return useCase;
     }

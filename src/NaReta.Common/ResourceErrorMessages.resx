@@ -207,4 +207,7 @@
   <data name="TRANSACTION_NOT_EXPENSE" xml:space="preserve">
     <value>Transaction is not of type expense</value>
   </data>
+  <data name="ACCOUNT_INVALID" xml:space="preserve">
+    <value>Account invalid</value>
+  </data>
 </root>

@@ -1,10 +1,12 @@
 ﻿using NaReta.Domain.Entities;
+using NaReta.Domain.ValueObjects;
 
 namespace NaReta.Domain.Repositories.Transactions
 {
-    public interface ITransactionReadOnlyRepository
+    public interface ITransactionReadOnlyRepository : IBaseReadOnlyRepository<Transaction>
     {
         Task<List<Transaction>> ListAsync();
-        Task<List<Transaction>> ListByAccountIdAsync(int accountId, DateTime? startDate = null, DateTime? endDate = null, int pageNumber = 1, int itemPerPage = 10); 
+        Task<List<Transaction>> ListByAccountIdAsync(int accountId, DateTime? startDate = null, DateTime? endDate = null, int pageNumber = 1, int itemPerPage = 10);
+        Task<PagedResult<Transaction>> ListByTransactionFilterAsync(TransactionFilter filter);
     }
 }

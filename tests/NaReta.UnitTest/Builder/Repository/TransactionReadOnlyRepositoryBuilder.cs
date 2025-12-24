@@ -2,6 +2,7 @@
 using NaReta.Application.UseCases.Transaction.List;
 using NaReta.Domain.Entities;
 using NaReta.Domain.Repositories.Transactions;
+using NaReta.Domain.ValueObjects;
 
 namespace NaReta.UnitTest.Builder.Repository;
 
@@ -14,24 +15,20 @@ internal class TransactionReadOnlyRepositoryBuilder
         mock = new Mock<ITransactionReadOnlyRepository>();
     }
 
-    public TransactionReadOnlyRepositoryBuilder ListByAccountIdAsync(List<Transaction> transactions)
+    public TransactionReadOnlyRepositoryBuilder ListByTransactionFilterAsync(InputListTransaction input, List<Transaction> transactions, int totalCount)
     {
-        mock.Setup(config => config.ListByAccountIdAsync(It.IsAny<int>(), null, null, It.IsAny<int>(), It.IsAny<int>())).ReturnsAsync(transactions);
-        return this;
-    }
+        var safeInput = input ?? new InputListTransaction();
 
-    public TransactionReadOnlyRepositoryBuilder ListByAccountIdWithDateAsync(InputListTransaction input, List<Transaction> transactions)
-    {
-        var query = transactions.AsQueryable();
-        if (input.StartDate != null && input.EndDate != null)
-            query = query.Where(t => t.Date >= input.StartDate && t.Date <= input.EndDate);
-
-        var result = query.Take(input.ItemPerPage).ToList();
-        
-        mock.Setup(config => config.ListByAccountIdAsync(
-            It.IsAny<int>(),
-            input.StartDate, input.EndDate, It.IsAny<int>(), It.IsAny<int>()))
-            .ReturnsAsync(result);
+        var result = new PagedResult<Transaction>(transactions, totalCount, safeInput.PageNumber, safeInput.PageSize);
+        mock.Setup(
+            config => config.ListByTransactionFilterAsync(It.Is<TransactionFilter>(filter =>
+                filter.AccountId == safeInput.AccountId
+                && filter.PageNumber == safeInput.PageNumber
+                && filter.PageSize == safeInput.PageSize
+                && filter.StartDate == safeInput.StartDate
+                && filter.EndDate == safeInput.EndDate
+            ))
+        ).ReturnsAsync(result);
         return this;
     }
 
@@ -39,4 +36,5 @@ internal class TransactionReadOnlyRepositoryBuilder
     {
         return mock.Object;
     }
+
 }

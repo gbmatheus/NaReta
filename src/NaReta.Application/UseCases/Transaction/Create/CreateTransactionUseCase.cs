@@ -5,47 +5,36 @@ using NaReta.Application.UseCases.Transaction.Create;
 using NaReta.Common;
 using NaReta.Common.Exceptions;
 using NaReta.Domain.Repositories;
-using NaReta.Domain.Repositories.Accounts;
-using NaReta.Domain.Repositories.Categories;
-using NaReta.Domain.Repositories.Transactions;
 using DomainEntity = NaReta.Domain.Entities;
 
 namespace NaReta.Application.UseCases.Transactions.Create;
 
 public class CreateTransactionUseCase : ICreateTransactionUseCase
 {
-    private readonly IAccountWriteOnlyRepository _accountRepository;
-    private readonly ITransactionWriteOnlyRepository _transactionRepository;
-    private readonly ICategoryWriteOnlyRepository _categoryRepository;
     private readonly IUnitOfWork _unitOfWork;
     private readonly IMapper _mapper;
 
-    public CreateTransactionUseCase(
-        IAccountWriteOnlyRepository accountRepository, ITransactionWriteOnlyRepository transactionRepository,
-        ICategoryWriteOnlyRepository categoryRepository, IUnitOfWork unitOfWork, IMapper mapper)
+    public CreateTransactionUseCase(IUnitOfWork unitOfWork, IMapper mapper)
     {
-        _accountRepository = accountRepository;
-        _transactionRepository = transactionRepository;
-        _categoryRepository = categoryRepository;
         _unitOfWork = unitOfWork;
         _mapper = mapper;
     }
 
     public async Task<OutputTransaction> ExecuteAsync(int accountId, InputTransaction input)
     {
-        var account = await _accountRepository.FindByIdAsync(accountId);
+        var account = await _unitOfWork.AccountWriteOnlyRepository.GetByIdAsync(accountId);
         if (account is null)
             throw new NotFoundException(ResourceErrorMessages.ACCOUNT_NOT_FOUND);
 
         await ValidateAsync(input);
 
-        var category = await _categoryRepository.FindByIdAsync(input.CategoryId);
+        var category = await _unitOfWork.CategoryWriteOnlyRepository.GetByIdAsync(input.CategoryId);
         if (category is null)
             throw new NotFoundException(ResourceErrorMessages.CATEGORY_NOT_FOUND);
 
         var transaction = new DomainEntity.Transaction(account, input.Type, input.Amount, input.Date, category, input.Description);
-        await _transactionRepository.AddSync(transaction);
-        await _unitOfWork.Commit();
+        await _unitOfWork.TransactionWriteOnlyRepository.AddAsync(transaction);
+        await _unitOfWork.CommitAsync();
 
         return _mapper.Map<OutputTransaction>(transaction);
     }

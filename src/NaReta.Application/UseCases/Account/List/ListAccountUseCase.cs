@@ -4,6 +4,7 @@ using NaReta.Application.UseCases.Account._Common;
 using NaReta.Domain.Repositories.Accounts;
 
 namespace NaReta.Application.UseCases.Account.Create;
+
 internal class ListAccountUseCase : IListAccountUseCase
 {
     private readonly IAccountReadOnlyRepository _repository;
@@ -20,6 +21,5 @@ internal class ListAccountUseCase : IListAccountUseCase
         var account = await _repository.ListAsync();
 
         return _mapper.Map<List<OutputAccount>>(account);
-
     }
 }

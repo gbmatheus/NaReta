@@ -1,10 +1,10 @@
-﻿namespace NaReta.Application.UseCases.Transaction.List;
+﻿using NaReta.Application.DTO;
 
-public class InputListTransaction
+namespace NaReta.Application.UseCases.Transaction.List;
+
+public class InputListTransaction : QueryStringParametersDTO
 {
     public int AccountId { get; set; }
-    public int ItemPerPage { get; set; } = 10;
-    public int PageNumber { get; set; } = 1;
     public DateTime? StartDate { get; set; } = null;
     public DateTime? EndDate { get; set; } = null;
 }

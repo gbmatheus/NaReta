@@ -28,16 +28,16 @@ public class TransactionController : ControllerBase
     }
 
     [HttpGet]
-    [ProducesResponseType(typeof(List<OutputTransaction>), statusCode: StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(PaginationOutput<OutputTransaction>), statusCode: StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     public async Task<IActionResult> List(
-        [FromQuery] InputListTransaction filterQuery,
+        [FromQuery] InputListTransaction queryString,
         [FromServices] IListTransactionUseCase useCase
     )
     {
-        var response = await useCase.ExecuteAsync(filterQuery);
+        var response = await useCase.ExecuteAsync(queryString);
 
-        if (!response.Any())
+        if (!response.Items.Any())
             return NoContent();
 
         return Ok(response);
