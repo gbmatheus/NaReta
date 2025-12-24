@@ -15,7 +15,13 @@ internal class CategoryWriteOnlyRepositoryBuilder
 
     public CategoryWriteOnlyRepositoryBuilder FindByIdAsync(Category category)
     {
-        mock.Setup(config => config.GetByIdAsync(It.IsAny<int>())).ReturnsAsync(category);
+        mock.Setup(config => config.GetByIdAsync(It.Is<int>(id => id == category.Id))).ReturnsAsync(category);
+        return this;
+    }
+
+    public CategoryWriteOnlyRepositoryBuilder GetByIdAsync(Category category)
+    {
+        mock.Setup(config => config.GetByIdAsync(It.Is<int>(id => id == category.Id))).ReturnsAsync(category);
         return this;
     }
 

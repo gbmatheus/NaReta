@@ -78,7 +78,9 @@ public class CreateAccountUseCaseTest
             accountRepositoryBuilder.ExistsByEmailAsync(email);
         IAccountWriteOnlyRepository accountRepository = accountRepositoryBuilder.Build();
 
-        IUnitOfWork unitOfWork = IUnitOfWorkBuilder.Build(accountRepository);
+        UnitOfWorkBuilder unitOfWorkBuilder = new UnitOfWorkBuilder();
+        unitOfWorkBuilder.SetupAccountRepository(accountRepository);
+        IUnitOfWork unitOfWork = unitOfWorkBuilder.Build();
 
         IMapper mapper = MapperBuilder.Build();
 
