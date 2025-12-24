@@ -21,6 +21,21 @@ public class InputListTransactionValidatorTest
 
         result.IsValid.ShouldBeTrue();
     }
+    
+    [Fact(DisplayName = nameof(Validate_WhenStartDateGreaterThanEndDate_ReturnErroMessageDateRangeInvalid))]
+    public void Validate_WhenAccountNotInformed_ReturnErroMessageAccountInvalid()
+    {
+        var input = InputListTransactionBuilder.Build();
+        input.AccountId = 0;
+
+        var validator = new InputListTransactionValidator();
+        var result = validator.Validate(input);
+
+        result.IsValid.ShouldBeFalse();
+        result.Errors.ShouldHaveSingleItem();
+
+        result.Errors.ShouldContain(err => err.ErrorMessage.Equals(ResourceErrorMessages.ACCOUNT_INVALID));
+    }
 
     [Fact(DisplayName = nameof(Validate_WhenStartDateGreaterThanEndDate_ReturnErroMessageDateRangeInvalid))]
     public void Validate_WhenStartDateGreaterThanEndDate_ReturnErroMessageDateRangeInvalid()
